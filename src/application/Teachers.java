@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Teachers {
 	
 	private int employeeId;
@@ -8,7 +10,7 @@ public class Teachers {
 	private String teacherAddress;
 	private int hSalary; //may not be negative
 	
-	
+	private ArrayList<Courses> courses;
 	
 	
 	//Constructor

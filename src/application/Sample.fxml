@@ -1,7 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
-	<!-- TODO Add Nodes -->
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <top>
+      <TabPane prefHeight="405.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Open">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="193.0" layoutY="106.0" prefHeight="91.0" prefWidth="211.0" text="Welcome" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Departments">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtDepartmentName" layoutX="28.0" layoutY="21.0" promptText="Department Name" />
+                        <TextField fx:id="txtDepartmentAddress" layoutX="28.0" layoutY="59.0" promptText="Department Address" />
+                        <TextField fx:id="txtDepartmentBudget" layoutX="28.0" layoutY="94.0" promptText="Department Budget" />
+                        <Button fx:id="btnDepartmentCreate" layoutX="28.0" layoutY="160.0" mnemonicParsing="false" text="Create" />
+                        <TableView fx:id="tableViewDepartment" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Name" />
+                            <TableColumn prefWidth="75.0" text="Address" />
+                              <TableColumn prefWidth="75.0" text="Budget" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnDepartmentUpdate" layoutX="26.0" layoutY="217.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnDepartmentDelete" layoutX="29.0" layoutY="285.0" mnemonicParsing="false" text="Delete" />
+                        <TextArea fx:id="txtAreaDepartment" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Teachers">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtTeacherName" layoutX="28.0" layoutY="21.0" promptText="Teacher Name" />
+                        <TextField fx:id="txtTeacherAddress" layoutX="28.0" layoutY="59.0" promptText="Teacher Address" />
+                        <TextField fx:id="txtTeacherEmployeeID" layoutX="28.0" layoutY="94.0" promptText="Employee ID" />
+                        <Button fx:id="btnTeacherCreate" layoutX="28.0" layoutY="256.0" mnemonicParsing="false" text="Create" />
+                        <TableView fx:id="tableViewTeacher" layoutX="207.0" layoutY="129.0" prefHeight="226.0" prefWidth="379.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ID" />
+                              <TableColumn prefWidth="75.0" text="Name" />
+                              <TableColumn prefWidth="75.0" text="Address" />
+                              <TableColumn prefWidth="75.0" text="Salary" />
+                              <TableColumn prefWidth="75.0" text="Title" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnTeacherUpdate" layoutX="109.0" layoutY="256.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnTeacherDelete" layoutX="66.0" layoutY="304.0" mnemonicParsing="false" text="Delete" />
+                        <TextArea fx:id="txtAreaTeacher" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
+                        <TextField fx:id="txtTeacherHourlySalary" layoutX="28.0" layoutY="135.0" promptText="Hourly Salary" />
+                        <ComboBox fx:id="comboBoxTeacherTitle" layoutX="34.0" layoutY="185.0" prefWidth="150.0" promptText="Title" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Courses">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtCoursesCode" layoutX="28.0" layoutY="21.0" promptText="Course Code" />
+                        <TextField fx:id="txtCoursesName" layoutX="29.0" layoutY="57.0" promptText="Course Name" />
+                        <TextField fx:id="txtCoursesCredits" layoutX="28.0" layoutY="93.0" promptText="Course Credits" />
+                        <Button fx:id="btnCoursesCreate" layoutX="27.0" layoutY="307.0" mnemonicParsing="false" text="Create" />
+                        <TableView fx:id="tableViewCourses" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="Code" />
+                              <TableColumn prefWidth="75.0" text="Name" />
+                              <TableColumn prefWidth="75.0" text="Creduts" />
+                              <TableColumn prefWidth="75.0" text="Levels" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnCoursesUpdate" layoutX="183.0" layoutY="307.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnCoursesDelete" layoutX="108.0" layoutY="307.0" mnemonicParsing="false" text="Delete" />
+                        <TextArea fx:id="txtAreaCourses" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
+                        <ComboBox fx:id="comboBoxCoursesLevels" layoutX="34.0" layoutY="136.0" prefWidth="150.0" promptText="Levels" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Course Responsinility">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnResponsibilityGive" layoutX="43.0" layoutY="208.0" mnemonicParsing="false" text="Give Course Responsibility" />
+                        <TableView fx:id="tableViewResponsibility" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="Employee ID" />
+                              <TableColumn prefWidth="75.0" text="Course Code" />
+                              <TableColumn prefWidth="75.0" text="Course Name" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TextArea fx:id="txtAreaResponsibility" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
+                        <ComboBox fx:id="comboBoxResponsibilityTeacher" layoutX="50.0" layoutY="32.0" prefWidth="150.0" promptText="Teacher" />
+                        <ComboBox fx:id="comboBoxResponsibilityCourse" layoutX="50.0" layoutY="104.0" prefWidth="150.0" promptText="Course" />
+                        <Button fx:id="btnResponsibilityRemove" layoutX="33.0" layoutY="241.0" mnemonicParsing="false" text="Remove Course Responsibility" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Teaching">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnTeachingAddTeacher" layoutX="79.0" layoutY="192.0" mnemonicParsing="false" text="Add Teacher" />
+                        <TableView fx:id="tableViewTeaching" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="Employee ID" />
+                              <TableColumn prefWidth="75.0" text="Course Code" />
+                              <TableColumn prefWidth="75.0" text="Hourse Teached" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TextArea fx:id="txtAreaTeaching" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
+                        <ComboBox fx:id="comboBoxTeachingTeacher" layoutX="50.0" layoutY="32.0" prefWidth="150.0" promptText="Teacher" />
+                        <ComboBox fx:id="comboBoxTeachingCourse" layoutX="50.0" layoutY="104.0" prefWidth="150.0" promptText="Course" />
+                        <Button fx:id="btnTeachingUpdate" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" text="Update Teachers Hours" />
+                        <TextField fx:id="txtTeachingHours" layoutX="45.0" layoutY="150.0" promptText="Hours Spent Teaching" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </top>
 </BorderPane>
