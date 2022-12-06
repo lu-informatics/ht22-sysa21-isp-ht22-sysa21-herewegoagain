@@ -2,14 +2,13 @@ package application;
 
 public class Departments {
 	
-	 private String departmentName;
+	 private String departmentName; //Unique 
 	 private String departmentAddress;
-	 private int budget; //must not be a negative value
+	 private double budget; //must not be a negative value
 	
 	 
-	 //Constructor
-	 public Departments(String departmentName, String departmentAddress, int budget) {
-		 
+	 //Constructor creates
+	 public Departments(String departmentName, String departmentAddress, double budget) {
 		this.departmentName = departmentName;
 		this.departmentAddress = departmentAddress;
 		this.budget = budget;
@@ -28,13 +27,15 @@ public class Departments {
 	public void setAddress(String address) {
 		this.departmentAddress = address;
 	}
-	public int getBudget() {
+	public double getBudget() {
 		return budget;
 	}
-	public void setBudget(int budget) {
+	public void setBudget(double budget) {
 		this.budget = budget;
 	}
 	 
+	//Delete 
+	
 	
 
 }

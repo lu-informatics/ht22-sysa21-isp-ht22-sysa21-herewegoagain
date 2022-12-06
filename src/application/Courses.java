@@ -7,6 +7,7 @@ public class Courses {
 	private String courseName;
 	private String courseCode; //Unique
 	private String level;
+	private Teachers teachers; 
 	
 	
 	
