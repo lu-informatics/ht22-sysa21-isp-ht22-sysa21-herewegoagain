@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class Teachers {
+public class Teacher {
 	
 	private int employeeId;
 	private String teacherName;
@@ -10,11 +10,11 @@ public class Teachers {
 	private String teacherAddress;
 	private int hSalary; //may not be negative
 	
-	private ArrayList<Courses> courses;
+	private ArrayList<Course> courses;
 	
 	
 	//Constructor
-	public Teachers(int employeeId, String teacherName, String title, String teacherAddress, int hSalary) {
+	public Teacher(int employeeId, String teacherName, String title, String teacherAddress, int hSalary) {
 		this.employeeId = employeeId;
 		this.teacherName = teacherName;
 		this.title = title;
