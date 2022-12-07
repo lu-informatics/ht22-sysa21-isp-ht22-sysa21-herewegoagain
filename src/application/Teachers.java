@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Teachers {
 	
@@ -9,8 +10,10 @@ public class Teachers {
 	private String title;
 	private String teacherAddress;
 	private int hSalary; //may not be negative
+	private Departments department;
 	
 	private ArrayList<Courses> courses;
+	
 	
 	
 	//Constructor
@@ -51,8 +54,28 @@ public class Teachers {
 	}
 	public void sethSalary(int hSalary) {
 		this.hSalary = hSalary;
+	
+	}
+	public Departments getDepartment() {
+		return department;
+	}
+	public void setDepartment(Departments department) {
+		this.department = department;
+	}
+	public ArrayList<Courses> getCourses() {
+		return courses;
+	}
+	public void setCourses(ArrayList<Courses> courses) {
+		this.courses = courses;
+
 	}
 	
-	
+	public Courses findCourse(String CourseCode) {
+		for (Courses a : this.getCourses()) {
+			if (CourseCode == a.getCourseCode())
+				return a;
+		}
+		return null;
 
+	}
 }
