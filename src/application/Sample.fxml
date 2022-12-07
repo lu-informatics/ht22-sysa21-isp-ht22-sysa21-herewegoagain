@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -11,7 +11,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <top>
@@ -33,7 +32,7 @@
                         <TextField fx:id="txtDepartmentName" layoutX="28.0" layoutY="21.0" promptText="Department Name" />
                         <TextField fx:id="txtDepartmentAddress" layoutX="28.0" layoutY="59.0" promptText="Department Address" />
                         <TextField fx:id="txtDepartmentBudget" layoutX="28.0" layoutY="94.0" promptText="Department Budget" />
-                        <Button fx:id="btnDepartmentCreate" layoutX="28.0" layoutY="160.0" mnemonicParsing="false" text="Create" />
+                        <Button fx:id="btnDepartmentCreate" layoutX="28.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnDepartmentCreate" text="Create" />
                         <TableView fx:id="tableViewDepartment" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Name" />
@@ -44,7 +43,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button fx:id="btnDepartmentUpdate" layoutX="26.0" layoutY="217.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnDepartmentUpdate" layoutX="26.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnDepartmentUpdate" text="Update" />
                         <Button fx:id="btnDepartmentDelete" layoutX="29.0" layoutY="285.0" mnemonicParsing="false" text="Delete" />
                         <TextArea fx:id="txtAreaDepartment" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
                      </children>
