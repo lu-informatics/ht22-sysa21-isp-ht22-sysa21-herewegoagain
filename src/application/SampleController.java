@@ -164,6 +164,7 @@ private TextField txtTeachingHours;
 		this.depList = depList;
 	}
 
+<<<<<<< Updated upstream
 	public void addDepartments(String departmentAddress, int Budget) {
 		
 	}
@@ -171,6 +172,100 @@ private TextField txtTeachingHours;
 	
 	public void pop() {
 		System.out.println(  );
+=======
+	// Create Department
+	public void btnDepartmentCreate(ActionEvent event) {
+
+		String departmentName = txtDepartmentName.getText();
+		String departmentAddress = txtDepartmentAddress.getText();
+		Double departmentBudget = Double.parseDouble(txtDepartmentBudget.getText());
+		// why || and not &&? It checks if ANY of these are empty - if yes, returns from
+		// method, if not, continue
+		if (departmentName.trim().isEmpty() || departmentAddress.trim().isEmpty() || departmentBudget == null) {
+			// Print an error message if any of the values are empty
+			txtAreaDepartment.appendText("Error: Department Name, Address, and Budget must not be empty.");
+
+			txtAreaDepartment.clear();
+
+			return;
+		}
+		// Check if the departmentBudget is a number and if it is a positive value
+		if (departmentBudget.isNaN() == true || Double.isNaN(Double.parseDouble(txtDepartmentBudget.getText()))
+				|| departmentBudget < 0) {
+			// Print a message to solve the departmentBudget issue
+			txtAreaDepartment.appendText("Error: Budget must be written in numbers and be a positive value");
+
+			txtAreaDepartment.clear();
+			return;
+		}
+
+		// Check if the departmentName is already in the departmentNameList HashMap
+		if (departmentNameList.containsKey(departmentName)) {
+			// If the departmentName is already in the HashMap, get the ArrayList associated
+			// with that key
+			txtAreaDepartment.appendText(
+					"Error: a department with that name already exists: " + departmentNameList.get(departmentName));
+			txtAreaDepartment.clear();
+
+			return;
+		}
+
+		// If the departmentName is not in the HashMap, create a new ArrayList and add
+		// the Department object to it
+		ArrayList<Departments> list = new ArrayList<>();
+		// Create a new Department object with the given name, address, and budget
+		Departments department = new Departments(departmentName, departmentAddress, departmentBudget);
+		list.add(department);
+		// Add the new departmentName and ArrayList to the HashMap
+		departmentNameList.put(departmentName, list);
+
+		txtAreaDepartment.appendText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
+				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+
+		txtAreaDepartment.clear();
+
+		return;
+	}
+
+	// update
+	public void btnDepartmentUpdate(ActionEvent event) {
+
+		String departmentName = txtDepartmentName.getText();
+		String departmentAddress = txtDepartmentAddress.getText();
+		Double departmentBudget = Double.parseDouble(txtDepartmentBudget.getText());
+
+		// makes sure departmentName is not empty
+		if (departmentName.trim().isEmpty()) {
+			txtAreaDepartment.appendText("Please make sure to fill in a \nDepartment Name to be able to update");
+
+			return;
+		}
+
+		// Check if the departmentName is already in the departmentNameList HashMap
+		if (departmentNameList.containsKey(departmentName)) {
+
+			// Get the departmentList associated with departmentName
+			ArrayList<Departments> departmentList = departmentNameList.get(departmentName);
+
+			for (Departments department : departmentList) {
+				department.setAddress(departmentAddress);
+				department.setBudget(departmentBudget);
+
+				txtAreaDepartment.appendText("The Department: " + departmentName + "was updated\n" + "Address:  "
+						+ department.getAddress() + "\n" + "Budget:" + department.getBudget());
+
+				txtAreaDepartment.clear();
+
+			}
+
+			// Update the HashMap with the new values of the Department object
+			departmentNameList.put(departmentName, departmentList);
+		} else {
+			// If the departmentName is not in the HashMap, print an error message
+			txtAreaDepartment.appendText("Error: a department with that name does not exist.");
+		}
+
+>>>>>>> Stashed changes
 	}
 	*/
 }
