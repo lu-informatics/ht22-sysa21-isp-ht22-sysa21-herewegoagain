@@ -1,19 +1,19 @@
 package application;
 
-public class Courses {
+public class Course {
 	
 	//must not be a negative value
 	private int credits; 
 	private String courseName;
 	private String courseCode; //Unique
 	private String level;
-	private Teachers teachers; 
+	private Teacher teachers; 
 	
 	
 	
 	
 	//Construtor
-	public Courses(int credits, String courseName, String courseCode, String level) {
+	public Course(int credits, String courseName, String courseCode, String level) {
 		this.credits = credits;
 		this.courseName = courseName;
 		this.courseCode = courseCode;

@@ -1,6 +1,6 @@
 package application;
 
-public class Departments {
+public class Department {
 	
 	 private String departmentName; //Unique 
 	 private String departmentAddress;
@@ -8,7 +8,7 @@ public class Departments {
 	
 	 
 	 //Constructor creates
-	 public Departments(String departmentName, String departmentAddress, double budget) {
+	 public Department(String departmentName, String departmentAddress, double budget) {
 		this.departmentName = departmentName;
 		this.departmentAddress = departmentAddress;
 		this.budget = budget;
