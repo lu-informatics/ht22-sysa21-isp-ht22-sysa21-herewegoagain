@@ -1,7 +1,9 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -143,8 +145,11 @@ public class SampleController {
 	private TextField txtTeachingHours;
 
 //Department
-			// Key , Value
+	// Key , Value
 	HashMap<String, Department> departmentNameList = new HashMap<>();
+
+	// Synchronizing the HashMap
+	Map<String, Department> depMap = Collections.synchronizedMap(departmentNameList);
 
 	// Departments depList = Departments;
 
@@ -157,71 +162,120 @@ public class SampleController {
 		// why || and not &&? It checks if ANY of these are empty - if yes, returns from
 		// method, if not, continue
 
-		if (departmentName.trim().isEmpty() || txtDepartmentAddress.getText().isEmpty()
-				|| txtDepartmentBudget.getText().isEmpty()) {
-			// Print an error message if any of the values are empty
-			txtAreaDepartment.appendText("Error: department name, address, and budget must not be empty.");
-			return;
-		} else {
+		try {
+			if (departmentName.trim().isEmpty() || txtDepartmentAddress.getText().isEmpty()
+					|| txtDepartmentBudget.getText().isEmpty()) {
+				// Print an error message if any of the values are empty
+				txtAreaDepartment.setText("Error: department name, address, \nand budget must not be empty.");
 
-			// Check if the departmentName is already in the departmentNameList HashMap
-			if (departmentNameList.containsKey(departmentName)) {
-				// If the departmentName is already in the HashMap, get the ArrayList associated
-				// with that key
-				System.out.println(
-						"Error: a department with that name already exists: " + departmentNameList.get(departmentName));
-				return;
+			} else {
+
+				double depBudget = Double.parseDouble(departmentBudget);
+
+				// Check if the departmentName is already in the departmentNameList HashMap
+				if (!departmentNameList.containsKey(departmentName) || !depMap.containsKey(departmentName)) {
+
+					// If it is not in a departmentName HashMap, create one
+					// Check that departmentBudget is not a negative value
+					if (depBudget < 0) {
+
+						txtAreaDepartment.setText("Budget cannot be negative value");
+
+					} else {
+
+						Department dep = new Department(departmentName, departmentAddress, depBudget);
+
+						dep.setDepartmentName(departmentName);
+						dep.setDepartmentAddress(departmentAddress);
+						dep.setBudget(depBudget);
+
+						departmentNameList.put(departmentName, dep);
+
+						txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName
+								+ "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+
+					}
+
+				} else {
+
+					// If the departmentName is already in the HashMap, get the ArrayList associated
+					// with that key
+					txtAreaDepartment.setText(
+							"Error: A department with that name (" + depMap.get(departmentName).getDepartmentName()
+									+ ") already exists.\nPlease make sure to use another Department Name ");
+
+				}
 			}
-
-
-		txtAreaDepartment.appendText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
-				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
-
-		txtAreaDepartment.clear();
-
-		return;
-		
-		
-		///den är inte klar än
+		} catch (NumberFormatException e) {
+			txtAreaDepartment.setText("Department Budget must be written in numbers");
 		}
 
 	}
 
 	// update
-	//den är inte klar än
+	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
+	// adress eller både och
 	public void btnDepartmentUpdate(ActionEvent event) {
 
 		String departmentName = txtDepartmentName.getText();
 		String departmentAddress = txtDepartmentAddress.getText();
-		Double departmentBudget = Double.parseDouble(txtDepartmentBudget.getText()); //ändra som i 156 
+		String departmentBudget = txtDepartmentBudget.getText(); // ändra som i 156
+		try {
+			if (departmentName.trim().isEmpty()) {
+				txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to update");
+
+				return;
+			}
+
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (departmentNameList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+
+				// Get the value Department (named department) where the Key = departmentName
+				Department department = departmentNameList.get(departmentName);
+
+				// Set the new values
+				department.setDepartmentAddress(departmentAddress);
+				department.setBudget(Double.parseDouble(departmentBudget));
+
+				txtAreaDepartment.setText("The Department: " + department.getDepartmentName() + " was updated\n"
+						+ "Address:  " + department.getDepartmentAddress() + "\n" + "Budget:" + department.getBudget());
+
+			} else
+
+			{
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaDepartment.setText("Error: a department with that name does not exist.");
+
+			}
+
+		} catch (NumberFormatException e) {
+			txtAreaDepartment.setText("Department Budget must be written in numbers");
+		}
+	}
+
+	public void btnDepartmentDelete(ActionEvent event) {
+
+		String departmentName = txtDepartmentName.getText();
 
 		if (departmentName.trim().isEmpty()) {
-			txtAreaDepartment.appendText("Please make sure to fill in a \nDepartment Name to be able to update");
+			txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to delete");
 
 			return;
+		} else {
+				// Get the value Department (named department) where the Key = departmentName
+				//Department department = departmentNameList.get(departmentName);
+
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (departmentNameList.containsKey(departmentName)
+					/*&& department.equals(departmentNameList.get(departmentName))*/) {
+
+				departmentNameList.remove(departmentName);
+				
+				txtAreaDepartment.setText("The Department was deleted");
+			} else {
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaDepartment.setText("Error: a department with that name does not exist.");
+			}
 		}
-
-		// Check if the departmentName is already in the departmentNameList HashMap
-		if (departmentNameList.containsKey(departmentName)) {
-
-			// Get the value Department (named department) where the Key = departmentName
-			Department department = departmentNameList.get(departmentName);
-
-			// Set the new values
-			department.setAddress(departmentAddress);
-			department.setBudget(departmentBudget);
-
-			txtAreaDepartment.appendText("The Department: " + department.getdepartmentName() + "was updated\n"
-					+ "Address:  " + department.getAddress() + "\n" + "Budget:" + department.getBudget());
-
-			txtAreaDepartment.clear();
-
-		} else
-
-		{
-			// If the departmentName is not in the HashMap, print an error message
-			txtAreaDepartment.appendText("Error: a department with that name does not exist.");
-		}
-
 	}
 }
