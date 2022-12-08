@@ -1,10 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Department {
 	
 	 private String departmentName; //Unique 
 	 private String departmentAddress;
 	 private double budget; //must not be a negative value
+	 
+	 private ArrayList<Teacher> teacherList = new ArrayList<>();
 	
 	 
 	 //Constructor creates
@@ -15,27 +19,49 @@ public class Department {
 	}
 
 	//Getters and Setters
-	public String getdepartmentName() {
+
+	public String getDepartmentName() {
 		return departmentName;
 	}
-	public void setName(String name) {
-		this.departmentName = name;
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
-	public String getAddress() {
+
+	public String getDepartmentAddress() {
 		return departmentAddress;
 	}
-	public void setAddress(String address) {
-		this.departmentAddress = address;
+
+	public void setDepartmentAddress(String departmentAddress) {
+		this.departmentAddress = departmentAddress;
 	}
+
 	public double getBudget() {
 		return budget;
 	}
+
 	public void setBudget(double budget) {
 		this.budget = budget;
 	}
-	 
-	//Delete 
+
+	public ArrayList<Teacher> getTeacherList() {
+		return teacherList;
+	}
+
+	public void setTeacherList(ArrayList<Teacher> teacherList) {
+		this.teacherList = teacherList;
+	}
 	
+	//Find Teacher in Department 
 	
+	public Teacher findTeacher(int employeeID) {
+		for (Teacher a : this.getTeacherList()) {
+			if (employeeID == a.getEmployeeId())
+				return a;
+		}
+		return null;
+
+	}
+		
 
 }

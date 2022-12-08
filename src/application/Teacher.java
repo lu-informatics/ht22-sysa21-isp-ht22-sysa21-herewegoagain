@@ -1,7 +1,7 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Teacher {
 	
@@ -62,17 +62,17 @@ public class Teacher {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-	public ArrayList<Course> getCourses() {
+	public ArrayList<Course> getCourse() {
 		return course;
 	}
-	public void setCourses(ArrayList<Course> courses) {
-		this.course = courses;
+	public void setCourse(ArrayList<Course> course) {
+		this.course = course;
 
 	}
 	
-	public Course findCourse(String CourseCode) {
-		for (Course a : this.getCourses()) {
-			if (CourseCode == a.getCourseCode())
+	public Course findCourse(String courseCode) {
+		for (Course a : this.getCourse()) {
+			if (courseCode == a.getCourseCode())
 				return a;
 		}
 		return null;
