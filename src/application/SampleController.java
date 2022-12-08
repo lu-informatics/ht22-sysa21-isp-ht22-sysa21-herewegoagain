@@ -146,10 +146,10 @@ public class SampleController {
 
 //Department
 	// Key , Value
-	HashMap<String, Department> departmentNameList = new HashMap<>();
+	HashMap<String, Department> departmentList = new HashMap<>();
 
 	// Synchronizing the HashMap
-	Map<String, Department> depMap = Collections.synchronizedMap(departmentNameList);
+	Map<String, Department> depMap = Collections.synchronizedMap(departmentList);
 
 	// Departments depList = Departments;
 
@@ -173,7 +173,7 @@ public class SampleController {
 				double depBudget = Double.parseDouble(departmentBudget);
 
 				// Check if the departmentName is already in the departmentNameList HashMap
-				if (!departmentNameList.containsKey(departmentName) || !depMap.containsKey(departmentName)) {
+				if (!departmentList.containsKey(departmentName) || !depMap.containsKey(departmentName)) {
 
 					// If it is not in a departmentName HashMap, create one
 					// Check that departmentBudget is not a negative value
@@ -189,7 +189,7 @@ public class SampleController {
 						dep.setDepartmentAddress(departmentAddress);
 						dep.setBudget(depBudget);
 
-						departmentNameList.put(departmentName, dep);
+						departmentList.put(departmentName, dep);
 
 						txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName
 								+ "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
@@ -228,10 +228,10 @@ public class SampleController {
 			}
 
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (departmentNameList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+			if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
 
 				// Get the value Department (named department) where the Key = departmentName
-				Department department = departmentNameList.get(departmentName);
+				Department department = departmentList.get(departmentName);
 
 				// Set the new values
 				department.setDepartmentAddress(departmentAddress);
@@ -253,29 +253,34 @@ public class SampleController {
 		}
 	}
 
+	//Overkill men den funkar
 	public void btnDepartmentDelete(ActionEvent event) {
 
 		String departmentName = txtDepartmentName.getText();
 
-		if (departmentName.trim().isEmpty()) {
-			txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to delete");
+		// ComboBox later
+		if (!departmentName.trim().isEmpty()) {
 
-			return;
-		} else {
-				// Get the value Department (named department) where the Key = departmentName
-				//Department department = departmentNameList.get(departmentName);
-
+			Department dep = departmentList.get(departmentName);
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (departmentNameList.containsKey(departmentName)
-					/*&& department.equals(departmentNameList.get(departmentName))*/) {
+			if (departmentList.containsKey(departmentName)
+			/* && department.equals(departmentNameList.get(departmentName)) */) {
 
-				departmentNameList.remove(departmentName);
-				
+				departmentList.get(departmentName);
+				departmentList.remove(departmentName, dep);
+
 				txtAreaDepartment.setText("The Department was deleted");
 			} else {
 				// If the departmentName is not in the HashMap, print an error message
 				txtAreaDepartment.setText("Error: a department with that name does not exist.");
 			}
+		} else {
+
+			// If departmentName is empty, print an error message
+			txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to delete");
+
+			return;
+
 		}
 	}
 }

@@ -44,7 +44,7 @@
                            </columnResizePolicy>
                         </TableView>
                         <Button fx:id="btnDepartmentUpdate" layoutX="26.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnDepartmentUpdate" text="Update" />
-                        <Button fx:id="btnDepartmentDelete" layoutX="29.0" layoutY="285.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="btnDepartmentDelete" layoutX="29.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnDepartmentDelete" text="Delete" />
                         <TextArea fx:id="txtAreaDepartment" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
                      </children>
                   </AnchorPane>
