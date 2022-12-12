@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -25,13 +26,13 @@ public class SampleController {
 	private URL location;
 
 	@FXML
-	private Button btnCoursesCreate;
+	private Button btnCourseCreate;
 
 	@FXML
-	private Button btnCoursesDelete;
+	private Button btnCourseDelete;
 
 	@FXML
-	private Button btnCoursesUpdate;
+	private Button btnCourseUpdate;
 
 	@FXML
 	private Button btnDepartmentCreate;
@@ -64,7 +65,7 @@ public class SampleController {
 	private Button btnTeachingUpdate;
 
 	@FXML
-	private ComboBox<?> comboBoxCoursesLevels;
+	private ComboBox<String> comboBoxCourseCycle;
 
 	@FXML
 	private ComboBox<?> comboBoxResponsibilityCourse;
@@ -82,7 +83,7 @@ public class SampleController {
 	private ComboBox<?> comboBoxTeachingTeacher;
 
 	@FXML
-	private TableView<?> tableViewCourses;
+	private TableView<?> tableViewCourse;
 
 	@FXML
 	private TableView<?> tableViewDepartment;
@@ -97,7 +98,7 @@ public class SampleController {
 	private TableView<?> tableViewTeaching;
 
 	@FXML
-	private TextArea txtAreaCourses;
+	private TextArea txtAreaCourse;
 
 	@FXML
 	private TextArea txtAreaDepartment;
@@ -112,13 +113,13 @@ public class SampleController {
 	private TextArea txtAreaTeaching;
 
 	@FXML
-	private TextField txtCoursesCode;
+	private TextField txtCourseCredit;
 
 	@FXML
-	private TextField txtCoursesCredits;
+	private TextField txtCourseCode;
 
 	@FXML
-	private TextField txtCoursesName;
+	private TextField txtCourseName;
 
 	@FXML
 	private TextField txtDepartmentAddress;
@@ -142,9 +143,21 @@ public class SampleController {
 	private TextField txtTeacherName;
 
 	@FXML
+	private TextField txtTeacherLastname;
+	
+	@FXML
 	private TextField txtTeachingHours;
 
-//Department
+	// Populating Course ComboBox
+
+// Course Lists
+	// Key , Value
+	HashMap<String, Course> courseList = new HashMap<>();
+
+	// Synchronizing the HashMap
+	Map<String, Course> courseMap = Collections.synchronizedMap(courseList);
+
+//Department Lists
 	// Key , Value
 	HashMap<String, Department> departmentList = new HashMap<>();
 
@@ -153,65 +166,106 @@ public class SampleController {
 
 	// Departments depList = Departments;
 
-	// Create Department
-	public void btnDepartmentCreate(ActionEvent event) {
+	// Create Course
+	public void btnCourseCreate(ActionEvent event) {
 
-		String departmentName = txtDepartmentName.getText();
-		String departmentAddress = txtDepartmentAddress.getText();
-		String departmentBudget = txtDepartmentBudget.getText();
-		// why || and not &&? It checks if ANY of these are empty - if yes, returns from
-		// method, if not, continue
+		String courseCode = txtCourseCode.getText();
+		String courseName = txtCourseName.getText();
+		String stringCourseCredit = txtCourseCredit.getText();
+		String courseCycle = comboBoxCourseCycle.getValue();
 
 		try {
-			if (departmentName.trim().isEmpty() || txtDepartmentAddress.getText().isEmpty()
-					|| txtDepartmentBudget.getText().isEmpty()) {
+			if (txtCourseCode.getText().isEmpty() || txtCourseName.getText().isEmpty()
+					|| txtCourseCredit.getText().isEmpty()) {
 				// Print an error message if any of the values are empty
-				txtAreaDepartment.setText("Error: department name, address, \nand budget must not be empty.");
-
+				txtAreaCourse.setText("Error: course code, name, credits and cycle \nmust not be empty ");
 			} else {
 
-				double depBudget = Double.parseDouble(departmentBudget);
+				int courseCredit = Integer.parseInt(stringCourseCredit);
 
-				// Check if the departmentName is already in the departmentNameList HashMap
-				if (!departmentList.containsKey(departmentName) || !depMap.containsKey(departmentName)) {
+				if (!courseList.containsKey(courseCode) || !courseMap.containsKey(courseCode)) {
 
-					// If it is not in a departmentName HashMap, create one
-					// Check that departmentBudget is not a negative value
-					if (depBudget < 0) {
+					if (courseCredit < 0) {
 
-						txtAreaDepartment.setText("Budget cannot be negative value");
-
+						txtAreaCourse.setText("Course credit cannot be a negative value");
 					} else {
 
-						Department dep = new Department(departmentName, departmentAddress, depBudget);
+						Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
 
-						dep.setDepartmentName(departmentName);
-						dep.setDepartmentAddress(departmentAddress);
-						dep.setBudget(depBudget);
+						course.setCourseCode(courseCode);
+						course.setCourseName(courseName);
+						course.setCourseCredit(courseCredit);
+						course.setCourseCycle(courseCycle);
 
-						departmentList.put(departmentName, dep);
+						courseList.put(courseCode, course);
 
-						txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName
-								+ "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+						txtAreaDepartment.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
+								+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
+								+ courseCycle);
 
 					}
 
 				} else {
-
-					// If the departmentName is already in the HashMap, get the ArrayList associated
-					// with that key
-					txtAreaDepartment.setText(
-							"Error: A department with that name (" + depMap.get(departmentName).getDepartmentName()
-									+ ") already exists.\nPlease make sure to use another Department Name ");
-
+					txtAreaCourse.setText("Error: A course with that code (" + courseMap.get(courseCode).getCourseCode()
+							+ ") already exists.\nPlease make sure to use another Course code");
 				}
+
 			}
-		} catch (NumberFormatException e) {
-			txtAreaDepartment.setText("Department Budget must be written in numbers");
+
+		}
+
+		catch (NumberFormatException e) {
+			txtAreaCourse.setText("Course credit must be written in numbers");
 		}
 
 	}
 
+	// Create Department
+	
+	public void btnDepartmentCreate(ActionEvent event) {
+	    String departmentName = txtDepartmentName.getText();
+	    String departmentAddress = txtDepartmentAddress.getText();
+	    String departmentBudget = txtDepartmentBudget.getText();
+
+	    // Return if any of the values are empty
+	    if (departmentName.isEmpty() || txtDepartmentAddress.getText().isEmpty() || txtDepartmentBudget.getText().isEmpty()) {
+	        // Print an error message
+	        txtAreaDepartment.setText("Error: department name, address, and budget \nmust not be empty.");
+	        return;
+	    }
+
+	    // Parse the budget as a double
+	    double depBudget;
+	    try {
+	        depBudget = Double.parseDouble(departmentBudget);
+	    } catch (NumberFormatException e) {
+	        txtAreaDepartment.setText("Department Budget must be written in numbers");
+	        return;
+	    }
+
+	    // Check if the departmentName is already in the departmentNameList HashMap
+	    if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+	        txtAreaDepartment.setText("Error: A department with that name already exists.\nPlease make sure to use another Department Name");
+	        return;
+	    }
+
+	    // Check that departmentBudget is not a negative value
+	    if (depBudget < 0) {
+	        txtAreaDepartment.setText("Budget cannot be negative value");
+	        return;
+	    }
+
+	    // Create a new Department object with the given values
+	    Department dep = new Department(departmentName, departmentAddress, depBudget);
+
+	    // Add the department to the HashMap
+	    departmentList.put(departmentName, dep);
+
+	    // Print a success message
+	    txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+	}
+	
+	
 	// update
 	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
 	// adress eller både och
@@ -221,7 +275,7 @@ public class SampleController {
 		String departmentAddress = txtDepartmentAddress.getText();
 		String departmentBudget = txtDepartmentBudget.getText(); // ändra som i 156
 		try {
-			if (departmentName.trim().isEmpty()) {
+			if (departmentName.isEmpty()) {
 				txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to update");
 
 				return;
@@ -253,13 +307,13 @@ public class SampleController {
 		}
 	}
 
-	//Overkill men den funkar
+	// Overkill men den funkar
 	public void btnDepartmentDelete(ActionEvent event) {
 
 		String departmentName = txtDepartmentName.getText();
 
 		// ComboBox later
-		if (!departmentName.trim().isEmpty()) {
+		if (!departmentName.isEmpty()) {
 
 			Department dep = departmentList.get(departmentName);
 			// Check if the departmentName is already in the departmentNameList HashMap
