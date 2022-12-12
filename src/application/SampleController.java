@@ -220,6 +220,38 @@ public class SampleController {
 
 	}
 
+	public void btnCourseDelete(ActionEvent event) {
+
+		String courseCode = txtCourseCode.getText();
+
+		// ComboBox later
+		if (!courseCode.isEmpty()) {
+
+			Course course = courseList.get(courseCode);
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (courseList.containsKey(courseCode)
+			/* && department.equals(departmentNameList.get(departmentName)) */) {
+
+				courseList.get(courseCode);
+				courseList.remove(course);
+
+				txtAreaCourse.setText("The course was deleted");
+			} else {
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaCourse.setText("Error: a course with that name does not exist.");
+			}
+		} else {
+
+			// If departmentName is empty, print an error message
+			txtAreaCourse.setText("Please make sure to fill in a Course Code \nto be able to delete");
+
+			return;
+
+		}
+	}
+	
+	
+	
 	// Create Department
 	
 	public void btnDepartmentCreate(ActionEvent event) {
