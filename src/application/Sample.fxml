@@ -55,9 +55,9 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtTeacherName" layoutX="28.0" layoutY="21.0" promptText="Teacher Name" />
-                        <TextField fx:id="txtTeacherAddress" layoutX="28.0" layoutY="59.0" promptText="Teacher Address" />
-                        <TextField fx:id="txtTeacherEmployeeID" layoutX="28.0" layoutY="94.0" promptText="Employee ID" />
-                        <Button fx:id="btnTeacherCreate" layoutX="28.0" layoutY="256.0" mnemonicParsing="false" text="Create" />
+                        <TextField fx:id="txtTeacherAddress" layoutX="28.0" layoutY="82.0" promptText="Teacher Address" />
+                        <TextField fx:id="txtTeacherEmployeeID" layoutX="28.0" layoutY="117.0" promptText="Employee ID" />
+                        <Button fx:id="btnTeacherCreate" layoutX="38.0" layoutY="281.0" mnemonicParsing="false" text="Create" />
                         <TableView fx:id="tableViewTeacher" layoutX="207.0" layoutY="129.0" prefHeight="226.0" prefWidth="379.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="ID" />
@@ -70,11 +70,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button fx:id="btnTeacherUpdate" layoutX="109.0" layoutY="256.0" mnemonicParsing="false" text="Update" />
-                        <Button fx:id="btnTeacherDelete" layoutX="66.0" layoutY="304.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="btnTeacherUpdate" layoutX="119.0" layoutY="281.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnTeacherDelete" layoutX="76.0" layoutY="329.0" mnemonicParsing="false" text="Delete" />
                         <TextArea fx:id="txtAreaTeacher" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
-                        <TextField fx:id="txtTeacherHourlySalary" layoutX="28.0" layoutY="135.0" promptText="Hourly Salary" />
-                        <ComboBox fx:id="comboBoxTeacherTitle" layoutX="34.0" layoutY="185.0" prefWidth="150.0" promptText="Title" />
+                        <TextField fx:id="txtTeacherHourlySalary" layoutX="28.0" layoutY="158.0" promptText="Hourly Salary" />
+                        <ComboBox fx:id="comboBoxTeacherTitle" layoutX="33.0" layoutY="207.0" prefWidth="150.0" promptText="Title" />
+                        <TextField fx:id="txtTeacherLastname" layoutX="28.0" layoutY="50.0" promptText="Teacher Lastname" />
                      </children>
                   </AnchorPane>
                </content>

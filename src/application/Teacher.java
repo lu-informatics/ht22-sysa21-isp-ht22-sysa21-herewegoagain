@@ -7,6 +7,7 @@ public class Teacher {
 	
 	private int employeeId;
 	private String teacherName;
+	private String teacherLastName;
 	private String title;
 	private String teacherAddress;
 	private int hSalary; //may not be negative

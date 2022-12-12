@@ -143,6 +143,9 @@ public class SampleController {
 	private TextField txtTeacherName;
 
 	@FXML
+	private TextField txtTeacherLastname;
+	
+	@FXML
 	private TextField txtTeachingHours;
 
 	// Populating Course ComboBox
@@ -218,64 +221,51 @@ public class SampleController {
 	}
 
 	// Create Department
+	
 	public void btnDepartmentCreate(ActionEvent event) {
+	    String departmentName = txtDepartmentName.getText();
+	    String departmentAddress = txtDepartmentAddress.getText();
+	    String departmentBudget = txtDepartmentBudget.getText();
 
-		String departmentName = txtDepartmentName.getText();
-		String departmentAddress = txtDepartmentAddress.getText();
-		String departmentBudget = txtDepartmentBudget.getText();
-		// why || and not &&? It checks if ANY of these are empty - if yes, returns from
-		// method, if not, continue
+	    // Return if any of the values are empty
+	    if (departmentName.isEmpty() || txtDepartmentAddress.getText().isEmpty() || txtDepartmentBudget.getText().isEmpty()) {
+	        // Print an error message
+	        txtAreaDepartment.setText("Error: department name, address, and budget \nmust not be empty.");
+	        return;
+	    }
 
-		try {
-			if (departmentName.isEmpty() || txtDepartmentAddress.getText().isEmpty()
-					|| txtDepartmentBudget.getText().isEmpty()) {
-				// Print an error message if any of the values are empty
-				txtAreaDepartment.setText("Error: department name, address, \nand budget must not be empty.");
+	    // Parse the budget as a double
+	    double depBudget;
+	    try {
+	        depBudget = Double.parseDouble(departmentBudget);
+	    } catch (NumberFormatException e) {
+	        txtAreaDepartment.setText("Department Budget must be written in numbers");
+	        return;
+	    }
 
-			} else {
+	    // Check if the departmentName is already in the departmentNameList HashMap
+	    if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+	        txtAreaDepartment.setText("Error: A department with that name already exists.\nPlease make sure to use another Department Name");
+	        return;
+	    }
 
-				double depBudget = Double.parseDouble(departmentBudget);
+	    // Check that departmentBudget is not a negative value
+	    if (depBudget < 0) {
+	        txtAreaDepartment.setText("Budget cannot be negative value");
+	        return;
+	    }
 
-				// Check if the departmentName is already in the departmentNameList HashMap
-				if (!departmentList.containsKey(departmentName) || !depMap.containsKey(departmentName)) {
+	    // Create a new Department object with the given values
+	    Department dep = new Department(departmentName, departmentAddress, depBudget);
 
-					// If it is not in a departmentName HashMap, create one
-					// Check that departmentBudget is not a negative value
-					if (depBudget < 0) {
+	    // Add the department to the HashMap
+	    departmentList.put(departmentName, dep);
 
-						txtAreaDepartment.setText("Budget cannot be negative value");
-
-					} else {
-
-						Department dep = new Department(departmentName, departmentAddress, depBudget);
-
-						dep.setDepartmentName(departmentName);
-						dep.setDepartmentAddress(departmentAddress);
-						dep.setBudget(depBudget);
-
-						departmentList.put(departmentName, dep);
-
-						txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName
-								+ "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
-
-					}
-
-				} else {
-
-					// If the departmentName is already in the HashMap, get the ArrayList associated
-					// with that key
-					txtAreaDepartment.setText(
-							"Error: A department with that name (" + depMap.get(departmentName).getDepartmentName()
-									+ ") already exists.\nPlease make sure to use another Department Name ");
-
-				}
-			}
-		} catch (NumberFormatException e) {
-			txtAreaDepartment.setText("Department Budget must be written in numbers");
-		}
-
+	    // Print a success message
+	    txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
 	}
-
+	
+	
 	// update
 	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
 	// adress eller både och
