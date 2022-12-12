@@ -148,7 +148,27 @@ public class SampleController {
 	@FXML
 	private TextField txtTeachingHours;
 
-	// Populating Course ComboBox
+	
+
+	public void initialize() {
+	
+		// Populating Course ComboBox
+		 // Course
+		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
+		comboBoxCourseCycle.getSelectionModel().selectFirst();
+		
+		/* Course Responsibility
+		//for(Course course : courseList.containsKey(courseCode)) {
+			
+		}
+		
+		comboBoxResponsibilityCourse.getItems().add(courseList.get(""+courseList).getCourseCode());
+		comboBoxResponsibilityCourse.getSelectionModel().selectFirst();
+		comboBoxTeachingCourse.getSelectionModel().selectFirst();
+
+		*/
+		
+	}
 
 // Course Lists
 	// Key , Value
@@ -200,6 +220,8 @@ public class SampleController {
 							course.setCourseCycle(courseCycle);
 
 							courseList.put(courseCode, course);
+							
+						
 
 							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
 									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
