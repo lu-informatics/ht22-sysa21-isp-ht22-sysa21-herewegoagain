@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <top>
       <TabPane prefHeight="405.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -99,7 +99,7 @@
                            </columnResizePolicy>
                         </TableView>
                         <Button fx:id="btnCourseUpdate" layoutX="183.0" layoutY="307.0" mnemonicParsing="false" text="Update" />
-                        <Button fx:id="btnCourseDelete" layoutX="108.0" layoutY="307.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="btnCourseDelete" layoutX="108.0" layoutY="307.0" mnemonicParsing="false" onAction="#btnCourseDelete" text="Delete" />
                         <TextArea fx:id="txtAreaCourse" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
                         <ComboBox fx:id="comboBoxCourseCycle" layoutX="34.0" layoutY="136.0" prefWidth="150.0" promptText="Cycle" />
                         <TextField fx:id="txtCourseCredit" layoutX="28.0" layoutY="93.0" promptText="Course Credit" />

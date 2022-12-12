@@ -144,7 +144,7 @@ public class SampleController {
 
 	@FXML
 	private TextField txtTeacherLastname;
-	
+
 	@FXML
 	private TextField txtTeachingHours;
 
@@ -190,21 +190,25 @@ public class SampleController {
 						txtAreaCourse.setText("Course credit cannot be a negative value");
 					} else {
 
-						Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
+						if (courseCycle != null) {
 
-						course.setCourseCode(courseCode);
-						course.setCourseName(courseName);
-						course.setCourseCredit(courseCredit);
-						course.setCourseCycle(courseCycle);
+							Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
 
-						courseList.put(courseCode, course);
+							course.setCourseCode(courseCode);
+							course.setCourseName(courseName);
+							course.setCourseCredit(courseCredit);
+							course.setCourseCycle(courseCycle);
 
-						txtAreaDepartment.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
-								+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
-								+ courseCycle);
+							courseList.put(courseCode, course);
 
+							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
+									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
+									+ courseCycle);
+
+						} else {
+							txtAreaCourse.setText("Error: Cycle may not be empty");
+						}
 					}
-
 				} else {
 					txtAreaCourse.setText("Error: A course with that code (" + courseMap.get(courseCode).getCourseCode()
 							+ ") already exists.\nPlease make sure to use another Course code");
@@ -217,55 +221,89 @@ public class SampleController {
 		catch (NumberFormatException e) {
 			txtAreaCourse.setText("Course credit must be written in numbers");
 		}
+	}
 
+	// Delete Course
+
+	// Overkill men den funkar
+	public void btnCourseDelete(ActionEvent event) {
+
+		String courseCode = txtCourseCode.getText();
+
+		// ComboBox later
+		if (!courseCode.isEmpty()) {
+
+			Course course = courseList.get(courseCode);
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (courseList.containsKey(courseCode)
+			/* && department.equals(departmentNameList.get(departmentName)) */) {
+
+				courseList.get(courseCode);
+				courseList.remove(courseCode, course);
+
+				txtAreaDepartment.setText("Teacher was removed");
+			} else {
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaDepartment.setText("Error: a teacher with that course code does not exist.");
+			}
+		} else {
+
+			// If departmentName is empty, print an error message
+			txtAreaDepartment.setText("Please make sure to fill in a Course Code \nto be able to delete");
+
+			return;
+
+		}
 	}
 
 	// Create Department
-	
+
 	public void btnDepartmentCreate(ActionEvent event) {
-	    String departmentName = txtDepartmentName.getText();
-	    String departmentAddress = txtDepartmentAddress.getText();
-	    String departmentBudget = txtDepartmentBudget.getText();
+		String departmentName = txtDepartmentName.getText();
+		String departmentAddress = txtDepartmentAddress.getText();
+		String departmentBudget = txtDepartmentBudget.getText();
 
-	    // Return if any of the values are empty
-	    if (departmentName.isEmpty() || txtDepartmentAddress.getText().isEmpty() || txtDepartmentBudget.getText().isEmpty()) {
-	        // Print an error message
-	        txtAreaDepartment.setText("Error: department name, address, and budget \nmust not be empty.");
-	        return;
-	    }
+		// Return if any of the values are empty
+		if (departmentName.isEmpty() || txtDepartmentAddress.getText().isEmpty()
+				|| txtDepartmentBudget.getText().isEmpty()) {
+			// Print an error message
+			txtAreaDepartment.setText("Error: department name, address, and budget \nmust not be empty.");
+			return;
+		}
 
-	    // Parse the budget as a double
-	    double depBudget;
-	    try {
-	        depBudget = Double.parseDouble(departmentBudget);
-	    } catch (NumberFormatException e) {
-	        txtAreaDepartment.setText("Department Budget must be written in numbers");
-	        return;
-	    }
+		// Parse the budget as a double
+		double depBudget;
+		try {
+			depBudget = Double.parseDouble(departmentBudget);
+		} catch (NumberFormatException e) {
+			txtAreaDepartment.setText("Department Budget must be written in numbers");
+			return;
+		}
 
-	    // Check if the departmentName is already in the departmentNameList HashMap
-	    if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
-	        txtAreaDepartment.setText("Error: A department with that name already exists.\nPlease make sure to use another Department Name");
-	        return;
-	    }
+		// Check if the departmentName is already in the departmentNameList HashMap
+		if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+			txtAreaDepartment.setText(
+					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
+			return;
+		}
 
-	    // Check that departmentBudget is not a negative value
-	    if (depBudget < 0) {
-	        txtAreaDepartment.setText("Budget cannot be negative value");
-	        return;
-	    }
+		// Check that departmentBudget is not a negative value
+		if (depBudget < 0) {
+			txtAreaDepartment.setText("Budget cannot be negative value");
+			return;
+		}
 
-	    // Create a new Department object with the given values
-	    Department dep = new Department(departmentName, departmentAddress, depBudget);
+		// Create a new Department object with the given values
+		Department dep = new Department(departmentName, departmentAddress, depBudget);
 
-	    // Add the department to the HashMap
-	    departmentList.put(departmentName, dep);
+		// Add the department to the HashMap
+		departmentList.put(departmentName, dep);
 
-	    // Print a success message
-	    txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n" + "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+		// Print a success message
+		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
+				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
 	}
-	
-	
+
 	// update
 	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
 	// adress eller både och
