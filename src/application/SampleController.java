@@ -68,13 +68,13 @@ public class SampleController {
 	private ComboBox<String> comboBoxCourseCycle;
 
 	@FXML
-	private ComboBox<?> comboBoxResponsibilityCourse;
+	private ComboBox<String> comboBoxResponsibilityCourse;
 
 	@FXML
-	private ComboBox<?> comboBoxResponsibilityTeacher;
+	private ComboBox<String> comboBoxResponsibilityTeacher;
 
 	@FXML
-	private ComboBox<?> comboBoxTeacherTitle;
+	private ComboBox<String> comboBoxTeacherTitle;
 
 	@FXML
 	private ComboBox<?> comboBoxTeachingCourse;
@@ -148,7 +148,6 @@ public class SampleController {
 	@FXML
 	private TextField txtTeachingHours;
 
-
 // Course List
 	// Key , Value
 	HashMap<String, Course> courseList = new HashMap<>();
@@ -163,13 +162,19 @@ public class SampleController {
 	Map<String, Department> depMap = Collections.synchronizedMap(departmentList);
 
 	// Departments depList = Departments;
-	
-	
+
 //Populating ComboBoxes
 	public void initialize() {
-		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
+		// Teacher
+		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
+		// Course
+		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle"); // Add the "names" in the
+																								// cycles?
+		// Course Responsibility //Lista över Teacher och Courses behövs
+		
+		
+		// Teaching
 	}
-	
 
 	// Create Course
 	public void btnCourseCreate(ActionEvent event) {
@@ -190,31 +195,30 @@ public class SampleController {
 		int courseCredit;
 		try {
 			courseCredit = Integer.parseInt(stringCourseCredit);
-		} catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			txtAreaCourse.setText("Course credit must be written in numbers");
 			return;
 		}
-		
-		if(courseCredit < 0) {
+
+		if (courseCredit < 0) {
 			txtAreaCourse.setText("Course credit cannot be a negative value");
 			return;
-		}	
-		
-		if(courseList.containsKey(courseCode) || courseMap.containsKey(courseCode)) {
+		}
+
+		if (courseList.containsKey(courseCode) || courseMap.containsKey(courseCode)) {
 			txtAreaCourse.setText("Error: A course with that code (" + courseMap.get(courseCode).getCourseCode()
 					+ ") already exists.\nPlease make sure to use another Course code");
 			return;
 		}
-		
 
 		Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
 
 		courseList.put(courseCode, course);
 
 		txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n" + "Name:  "
-			+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
+				+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
 
-		}
+	}
 
 	public void btnCourseDelete(ActionEvent event) {
 
