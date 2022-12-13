@@ -8,16 +8,20 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class SampleController {
+	
 
 	@FXML
 	private ResourceBundle resources;
@@ -74,7 +78,7 @@ public class SampleController {
 	private ComboBox<?> comboBoxResponsibilityTeacher;
 
 	@FXML
-	private ComboBox<?> comboBoxTeacherTitle;
+	private ComboBox<String> comboBoxTeacherTitle;
 
 	@FXML
 	private ComboBox<?> comboBoxTeachingCourse;
@@ -92,7 +96,23 @@ public class SampleController {
 	private TableView<?> tableViewResponsibility;
 
 	@FXML
-	private TableView<?> tableViewTeacher;
+	private TableView<Teacher> tableViewTeacher;
+	
+	@FXML
+	private TableColumn<Teacher, String> columnAddress;
+
+	@FXML
+	private TableColumn<Teacher, String> columnEmployeeID;
+
+	@FXML
+	private TableColumn<Teacher, String> columnSalary;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTeacherName;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTitle;
+
 
 	@FXML
 	private TableView<?> tableViewTeaching;
@@ -149,6 +169,7 @@ public class SampleController {
 	private TextField txtTeachingHours;
 
 	// Populating Course ComboBox
+	
 
 // Course Lists
 	// Key , Value
@@ -165,6 +186,12 @@ public class SampleController {
 	Map<String, Department> depMap = Collections.synchronizedMap(departmentList);
 
 	// Departments depList = Departments;
+	
+	// Teacher List
+	HashMap<String, Teacher> teacherList = new HashMap<>();
+	Map<String, Teacher> teacherMap = Collections.synchronizedMap(teacherList);
+	
+	
 
 	// Create Course
 	public void btnCourseCreate(ActionEvent event) {
@@ -368,5 +395,150 @@ public class SampleController {
 			return;
 
 		}
-	}
 }
+	//Populating Teacher Title Combobox
+	public void initialize() {
+	comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor" );
+	}
+	
+	//Teacher TableView
+	
+	
+
+public void btnTeacherCreate (ActionEvent event)  {
+	
+	String TeacherName = txtTeacherName.getText();
+	String TeacherLastname = txtTeacherLastname.getText();
+	String TeacherAddress = txtTeacherAddress.getText();
+	String TeacherID = txtTeacherEmployeeID.getText();
+	String TeacherSalary = txtTeacherHourlySalary.getText();
+	String TeacherTitle = comboBoxTeacherTitle.getValue();
+
+
+if (TeacherName.isEmpty() || TeacherLastname.isEmpty()|| TeacherAddress.isEmpty()
+		|| TeacherID.isEmpty() || TeacherSalary.isEmpty()) {
+	txtAreaTeacher.setText("Please make sure all required fields have been filled in");
+	return;
+}
+
+int Salary;
+try {
+	Salary = Integer.parseInt(TeacherSalary);
+	
+} catch (NumberFormatException e) {
+    txtAreaTeacher.setText("Teacher salary must be written in numbers");
+    return;
+}
+	
+if (teacherList.containsKey(TeacherID) || teacherMap.containsKey(TeacherID)) {
+    txtAreaTeacher.setText("A teacher with id: " + TeacherID + " already exist");
+    return;
+    
+}
+    
+    if (Salary < 0) {
+        txtAreaTeacher.setText("Salary cannot be negative value");
+        return;
+    }
+    
+    int ID = Integer.parseInt(TeacherID); 
+Teacher teacher = new Teacher(ID, TeacherName, TeacherLastname, TeacherTitle, TeacherAddress, Salary);
+
+
+// Add the department to the HashMap
+teacherList.put(TeacherID, teacher);
+
+// Print a success message
+txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + TeacherName + " " + TeacherLastname + "\n" + "Employee ID: "
++ ID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:" + Salary ); //+  "\n"  + "Title: " + TeacherTitle);
+}
+
+public void initialize() {
+	private ObservableList<String, Teacher> teacherList = FXCollections.observableArrayList();
+}
+
+tableViewTeacher.setItems(null);;
+
+	
+
+	public void btnTeacherDelete (ActionEvent event) {
+
+		String TeacherID = txtTeacherEmployeeID.getText();
+
+
+		if (!TeacherID.isEmpty()) {
+
+			Teacher teacher = teacherList.get(TeacherID);
+			
+			if (teacherList.containsKey(TeacherID)) {
+
+				teacherList.get(TeacherID);
+				teacherList.remove(TeacherID);
+
+				txtAreaTeacher.setText("The Teacher was deleted");
+			} else {
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaTeacher.setText("A teacher with id: " + TeacherID + " does not exist");
+			}
+		} else {
+
+			// If departmentName is empty, print an error message
+			txtAreaTeacher.setText("Please make sure to fill in a Teacher ID \nto be able to delete");
+
+			return;
+
+		}
+
+	}
+	// Teacher update
+	public void teacherUpdate(ActionEvent event) {
+
+		String TeacherName = txtTeacherName.getText();
+		String TeacherLastname = txtTeacherLastname.getText();
+		String TeacherAddress = txtTeacherAddress.getText();
+		String TeacherID = txtTeacherEmployeeID.getText();
+		String TeacherSalary = txtTeacherHourlySalary.getText();
+		String TeacherTitle = (String) comboBoxTeacherTitle.getValue();
+		try {
+			if (TeacherID.isEmpty()) {
+				txtAreaTeacher.setText("Please make sure to fill in a Teacher ID \nto be able to update");
+				return;
+			}
+
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (teacherList.containsKey(TeacherID) || teacherMap.containsKey(TeacherID)) {
+
+				// Get the value Department (named department) where the Key = departmentName
+				Teacher teacher = teacherList.get(TeacherID);
+
+				// Set the new values
+				teacherList.replace(TeacherName, teacher);
+				teacherList.replace(TeacherLastname, teacher);
+				teacherList.replace(TeacherAddress, teacher);
+				teacherList.replace(TeacherID, teacher);
+				teacherList.replace(TeacherSalary, teacher);
+				teacherList.replace(TeacherTitle, teacher);
+				
+
+				txtAreaTeacher.setText("The teacher: " + TeacherName + TeacherLastname + " was updated" +  "\n" + "Employee ID: " 
+				+ TeacherID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:" + TeacherSalary); // + "\n"  + "Title: " + TeacherTitle);
+
+			} else
+
+			{
+				// If the departmentName is not in the HashMap, print an error message
+				txtAreaTeacher.setText("Error: a teacher with that ID does not exist.");
+
+			}
+
+		} catch (NumberFormatException e) {
+			txtAreaTeacher.setText("Teacher Salary must be written in numbers");
+		}
+	}
+	
+}
+
+
+
+
+
