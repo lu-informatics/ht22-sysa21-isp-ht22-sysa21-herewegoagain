@@ -8,20 +8,21 @@ public class Teacher {
 	private int employeeId;
 	private String teacherName;
 	private String teacherLastName;
-	private String title;
+	private String teacherTitle;
 	private String teacherAddress;
 	private int hSalary; //may not be negative
 	private Department department;
 	
-	private ArrayList<Course> course;
+	private ArrayList<Course> teaching = new ArrayList<>();
+	private ArrayList<Course> responsible = new ArrayList<>();	
 	
 	
 	
 	//Constructor
-	public Teacher(int employeeId, String teacherName, String title, String teacherAddress, int hSalary) {
+	public Teacher(int employeeId, String teacherName, String teacherLastname, String teacherTitle, String teacherAddress, int hSalary) {
 		this.employeeId = employeeId;
 		this.teacherName = teacherName;
-		this.title = title;
+		this.teacherTitle = teacherTitle;
 		this.teacherAddress = teacherAddress;
 		this.hSalary = hSalary;
 	}
@@ -39,10 +40,10 @@ public class Teacher {
 		this.teacherName = teacherName;
 	}
 	public String getTitle() {
-		return title;
+		return teacherTitle;
 	}
 	public void setTitle(String title) {
-		this.title = title;
+		this.teacherTitle = title;
 	}
 	public String getTeacherAddress() {
 		return teacherAddress;
@@ -63,20 +64,24 @@ public class Teacher {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-	public ArrayList<Course> getCourse() {
-		return course;
+	public String getTeacherLastName() {
+		return teacherLastName;
 	}
-	public void setCourse(ArrayList<Course> course) {
-		this.course = course;
+	public void setTeacherLastName(String teacherLastName) {
+		this.teacherLastName = teacherLastName;
+	}
+	public ArrayList<Course> getTeaching() {
+		return teaching;
+	}
+	public void setTeaching(ArrayList<Course> teaching) {
+		this.teaching = teaching;
+	}
+	public ArrayList<Course> getResponsible() {
+		return responsible;
+	}
+	public void setResponsible(ArrayList<Course> responsible) {
+		this.responsible = responsible;
+	}
 
 	}
-	
-	public Course findCourse(String courseCode) {
-		for (Course a : this.getCourse()) {
-			if (courseCode == a.getCourseCode())
-				return a;
-		}
-		return null;
 
-	}
-}
