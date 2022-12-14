@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -199,7 +200,7 @@ public class SampleController {
 	// Teacher Lists
 	HashMap<String, Teacher> teacherList = new HashMap<>();
 	ObservableList<Teacher> teachers = FXCollections.observableArrayList();
-	
+
 	@FXML
 	private TableView<Teacher> tableViewTeacher;
 
@@ -217,9 +218,6 @@ public class SampleController {
 
 	@FXML
 	private TableColumn<Teacher, String> columnTeacherTitle = new TableColumn<>("Value");;
-
-	
-	
 
 	public void initialize() {
 
@@ -244,8 +242,17 @@ public class SampleController {
 
 		tableViewDepartment.setItems(departments);
 
-		
-		
+		tableViewDepartment.setRowFactory(tv -> {
+
+			TableRow<Department> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+
+				Department rowData = row.getItem();
+				txtDepartmentName.setText(rowData.getDepartmentName());
+
+			});
+			return row;
+		});
 
 		/*
 		 * Course Responsibility //for(Course course :
@@ -262,12 +269,12 @@ public class SampleController {
 
 //Populating ComboBoxes
 		// Teacher
-		
+
 		// Courses
-		
+
 		// Course Cycles
 		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
-		comboBoxCourseCycle.getSelectionModel().selectFirst();																						// cycles?
+		comboBoxCourseCycle.getSelectionModel().selectFirst(); // cycles?
 		// Course Responsibility //Lista över Teacher och Courses behövs
 
 		// Populating Teacher Title Combobox
@@ -309,7 +316,6 @@ public class SampleController {
 
 							courseList.put(courseCode, course);
 							courses.add(courseList.get(courseCode));
-							
 
 							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
 									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
@@ -350,7 +356,6 @@ public class SampleController {
 				courseList.get(courseCode);
 				courseList.remove(courseCode, course);
 				courses.remove(courseList.get(courseCode));
-				
 
 				txtAreaDepartment.setText("Teacher was removed");
 			} else {
@@ -461,7 +466,7 @@ public class SampleController {
 	public void btnDepartmentDelete(ActionEvent event) {
 
 		String departmentName = txtDepartmentName.getText();
-
+		
 		// ComboBox later
 		if (!departmentName.isEmpty()) {
 
@@ -469,7 +474,9 @@ public class SampleController {
 			// Check if the departmentName is already in the departmentNameList HashMap
 			if (departmentList.containsKey(departmentName)) {
 
+				
 				departmentList.get(departmentName);
+				departments.remove(departmentList.get(departmentName));
 				departmentList.remove(departmentName, dep);
 
 				txtAreaDepartment.setText("The Department was deleted");
@@ -529,6 +536,7 @@ public class SampleController {
 
 // Add the department to the HashMap
 		teacherList.put(TeacherID, teacher);
+		teachers.add(teacherList.get(TeacherID));
 
 // Print a success message
 		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + TeacherName + " " + TeacherLastname
@@ -540,7 +548,7 @@ public class SampleController {
 
 		String teacherID = txtTeacherEmployeeID.getText();
 
-		//ComboBox later
+		// ComboBox later
 		if (!teacherID.isEmpty()) {
 
 			Teacher teacher = teacherList.get(teacherID);
