@@ -34,7 +34,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class SampleController {
-	
 
 	@FXML
 	private ResourceBundle resources;
@@ -103,25 +102,6 @@ public class SampleController {
 	private TableView<?> tableViewResponsibility;
 
 	@FXML
-	private TableView<Teacher> tableViewTeacher;
-	
-	@FXML
-	private TableColumn<Teacher, String> columnAddress;
-
-	@FXML
-	private TableColumn<Teacher, String> columnEmployeeID;
-
-	@FXML
-	private TableColumn<Teacher, String> columnSalary;
-
-	@FXML
-	private TableColumn<Teacher, String> columnTeacherName;
-
-	@FXML
-	private TableColumn<Teacher, String> columnTitle;
-
-
-	@FXML
 	private TableView<?> tableViewTeaching;
 
 	@FXML
@@ -182,8 +162,8 @@ public class SampleController {
 	// ObservableList from the HashMap - This is to keep track of
 	// changes in the HashMap
 	ObservableList<Course> courses = FXCollections.observableArrayList();
-	
-  @FXML
+
+	@FXML
 	private TableView<Course> tableViewCourse = new TableView<>();
 
 	@FXML
@@ -198,12 +178,12 @@ public class SampleController {
 	@FXML
 	private TableColumn<Course, String> tableColumnCourseCycle = new TableColumn<>("Value");
 
-  // Department Lists
+	// Department Lists
 
 	Map<String, Department> departmentList = new HashMap<>();
 
 	ObservableList<Department> departments = FXCollections.observableArrayList();
-  
+
 	@FXML
 	private TableView<Department> tableViewDepartment;
 
@@ -216,10 +196,30 @@ public class SampleController {
 	@FXML
 	private TableColumn<Department, Double> tableColumnDepartmentBudget = new TableColumn<>("Value");
 
-	// Teacher List
-	HashMap<String, Teacher> teacherList = new HashMap<>()
-  ObservableList<Teacher> teachers = FXCollections.observableArrayList();
- 
+	// Teacher Lists
+	HashMap<String, Teacher> teacherList = new HashMap<>();
+	ObservableList<Teacher> teachers = FXCollections.observableArrayList();
+	
+	@FXML
+	private TableView<Teacher> tableViewTeacher;
+
+	@FXML
+	private TableColumn<Teacher, String> columnEmployeeID = new TableColumn<>("Key");;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTeacherName = new TableColumn<>("Value");;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTeacherAddress = new TableColumn<>("Value");;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTeacherSalary = new TableColumn<>("Value");;
+
+	@FXML
+	private TableColumn<Teacher, String> columnTeacherTitle = new TableColumn<>("Value");;
+
+	
+	
 
 	public void initialize() {
 
@@ -233,21 +233,19 @@ public class SampleController {
 		// TableView Course
 		tableViewCourse.setItems(courses);
 
-
 		// TableColumn Department
 
 		tableColumnDepartmentName.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
-		tableColumnDepartmentAddress.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentAddress"));
+		tableColumnDepartmentAddress
+				.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentAddress"));
 		tableColumnDepartmentBudget.setCellValueFactory(new PropertyValueFactory<Department, Double>("budget"));
 
 		// TableView Department
 
 		tableViewDepartment.setItems(departments);
 
-		// Populating Course ComboBox
-		// Course
-		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
-		comboBoxCourseCycle.getSelectionModel().selectFirst();
+		
+		
 
 		/*
 		 * Course Responsibility //for(Course course :
@@ -262,22 +260,23 @@ public class SampleController {
 		 * 
 		 */
 
-	
- 
 //Populating ComboBoxes
 		// Teacher
-		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
-		// Course
-		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle"); // Add the "names" in the
-																								// cycles?
+		
+		// Courses
+		
+		// Course Cycles
+		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
+		comboBoxCourseCycle.getSelectionModel().selectFirst();																						// cycles?
 		// Course Responsibility //Lista över Teacher och Courses behövs
-		
-		
-		// Teaching
-	}
-  
-// Create Course
 
+		// Populating Teacher Title Combobox
+		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
+		comboBoxTeacherTitle.getSelectionModel().selectFirst();
+
+	}
+
+// Create Course
 
 	public void btnCourseCreate(ActionEvent event) {
 
@@ -308,9 +307,9 @@ public class SampleController {
 
 							tableViewCourse.refresh();
 
-
 							courseList.put(courseCode, course);
 							courses.add(courseList.get(courseCode));
+							
 
 							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
 									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
@@ -350,6 +349,8 @@ public class SampleController {
 
 				courseList.get(courseCode);
 				courseList.remove(courseCode, course);
+				courses.remove(courseList.get(courseCode));
+				
 
 				txtAreaDepartment.setText("Teacher was removed");
 			} else {
@@ -413,7 +414,6 @@ public class SampleController {
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
 				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
 	}
-
 
 	// update
 	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
@@ -485,90 +485,75 @@ public class SampleController {
 			return;
 
 		}
-}
-	//Populating Teacher Title Combobox
-	public void initialize() {
-	comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor" );
 	}
-	
-	//Teacher TableView
-	
-	
 
-public void btnTeacherCreate (ActionEvent event)  {
-	
-	String TeacherName = txtTeacherName.getText();
-	String TeacherLastname = txtTeacherLastname.getText();
-	String TeacherAddress = txtTeacherAddress.getText();
-	String TeacherID = txtTeacherEmployeeID.getText();
-	String TeacherSalary = txtTeacherHourlySalary.getText();
-	String TeacherTitle = comboBoxTeacherTitle.getValue();
+	// Teacher TableView
 
+	public void btnTeacherCreate(ActionEvent event) {
 
-if (TeacherName.isEmpty() || TeacherLastname.isEmpty()|| TeacherAddress.isEmpty()
-		|| TeacherID.isEmpty() || TeacherSalary.isEmpty()) {
-	txtAreaTeacher.setText("Please make sure all required fields have been filled in");
-	return;
-}
+		String TeacherName = txtTeacherName.getText();
+		String TeacherLastname = txtTeacherLastname.getText();
+		String TeacherAddress = txtTeacherAddress.getText();
+		String TeacherID = txtTeacherEmployeeID.getText();
+		String TeacherSalary = txtTeacherHourlySalary.getText();
+		String TeacherTitle = comboBoxTeacherTitle.getValue();
 
-int Salary;
-try {
-	Salary = Integer.parseInt(TeacherSalary);
-	
-} catch (NumberFormatException e) {
-    txtAreaTeacher.setText("Teacher salary must be written in numbers");
-    return;
-}
-	
-if (teacherList.containsKey(TeacherID) ) {
-    txtAreaTeacher.setText("A teacher with id: " + TeacherID + " already exist");
-    return;
-    
-}
-    
-    if (Salary < 0) {
-        txtAreaTeacher.setText("Salary cannot be negative value");
-        return;
-    }
-    
-    int ID = Integer.parseInt(TeacherID); 
-Teacher teacher = new Teacher(ID, TeacherName, TeacherLastname, TeacherTitle, TeacherAddress, Salary);
+		if (TeacherName.isEmpty() || TeacherLastname.isEmpty() || TeacherAddress.isEmpty() || TeacherID.isEmpty()
+				|| TeacherSalary.isEmpty()) {
+			txtAreaTeacher.setText("Please make sure all required fields have been filled in");
+			return;
+		}
 
+		int Salary;
+		try {
+			Salary = Integer.parseInt(TeacherSalary);
+
+		} catch (NumberFormatException e) {
+			txtAreaTeacher.setText("Teacher salary must be written in numbers");
+			return;
+		}
+
+		if (teacherList.containsKey(TeacherID)) {
+			txtAreaTeacher.setText("A teacher with id: " + TeacherID + " already exist");
+			return;
+
+		}
+
+		if (Salary < 0) {
+			txtAreaTeacher.setText("Salary cannot be negative value");
+			return;
+		}
+
+		int ID = Integer.parseInt(TeacherID);
+		Teacher teacher = new Teacher(ID, TeacherName, TeacherLastname, TeacherTitle, TeacherAddress, Salary);
 
 // Add the department to the HashMap
-teacherList.put(TeacherID, teacher);
+		teacherList.put(TeacherID, teacher);
 
 // Print a success message
-txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + TeacherName + " " + TeacherLastname + "\n" + "Employee ID: "
-+ ID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:" + Salary ); //+  "\n"  + "Title: " + TeacherTitle);
-}
+		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + TeacherName + " " + TeacherLastname
+				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:"
+				+ Salary); // + "\n" + "Title: " + TeacherTitle);
+	}
 
-public void initialize() {
-	private ObservableList<String, Teacher> teacherList = FXCollections.observableArrayList();
-}
+	public void btnTeacherDelete(ActionEvent event) {
 
-tableViewTeacher.setItems(null);;
+		String teacherID = txtTeacherEmployeeID.getText();
 
-	
+		//ComboBox later
+		if (!teacherID.isEmpty()) {
 
-	public void btnTeacherDelete (ActionEvent event) {
+			Teacher teacher = teacherList.get(teacherID);
 
-		String TeacherID = txtTeacherEmployeeID.getText();
+			if (teacherList.containsKey(teacherID)) {
 
-
-		if (!TeacherID.isEmpty()) {
-
-			Teacher teacher = teacherList.get(TeacherID);
-			
-			if (teacherList.containsKey(TeacherID)) {
-
-				teacherList.get(TeacherID);
-				teacherList.remove(TeacherID);
+				teacherList.get(teacherID);
+				teacherList.remove(teacherID, teacher);
 
 				txtAreaTeacher.setText("The Teacher was deleted");
 			} else {
 				// If the departmentName is not in the HashMap, print an error message
-				txtAreaTeacher.setText("A teacher with id: " + TeacherID + " does not exist");
+				txtAreaTeacher.setText("A teacher with id: " + teacherID + " does not exist");
 			}
 		} else {
 
@@ -580,38 +565,39 @@ tableViewTeacher.setItems(null);;
 		}
 
 	}
+
 	// Teacher update
 	public void teacherUpdate(ActionEvent event) {
 
-		String TeacherName = txtTeacherName.getText();
-		String TeacherLastname = txtTeacherLastname.getText();
-		String TeacherAddress = txtTeacherAddress.getText();
-		String TeacherID = txtTeacherEmployeeID.getText();
-		String TeacherSalary = txtTeacherHourlySalary.getText();
-		String TeacherTitle = (String) comboBoxTeacherTitle.getValue();
+		String teacherName = txtTeacherName.getText();
+		String teacherLastname = txtTeacherLastname.getText();
+		String teacherAddress = txtTeacherAddress.getText();
+		String teacherID = txtTeacherEmployeeID.getText();
+		String teacherSalary = txtTeacherHourlySalary.getText();
+		String teacherTitle = (String) comboBoxTeacherTitle.getValue();
 		try {
-			if (TeacherID.isEmpty()) {
+			if (teacherID.isEmpty()) {
 				txtAreaTeacher.setText("Please make sure to fill in a Teacher ID \nto be able to update");
 				return;
 			}
 
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (teacherList.containsKey(TeacherID)) {
+			if (teacherList.containsKey(teacherID)) {
 
 				// Get the value Department (named department) where the Key = departmentName
-				Teacher teacher = teacherList.get(TeacherID);
+				Teacher teacher = teacherList.get(teacherID);
 
 				// Set the new values
-				teacherList.replace(TeacherName, teacher);
-				teacherList.replace(TeacherLastname, teacher);
-				teacherList.replace(TeacherAddress, teacher);
-				teacherList.replace(TeacherID, teacher);
-				teacherList.replace(TeacherSalary, teacher);
-				teacherList.replace(TeacherTitle, teacher);
-				
+				teacherList.replace(teacherName, teacher);
+				teacherList.replace(teacherLastname, teacher);
+				teacherList.replace(teacherAddress, teacher);
+				teacherList.replace(teacherID, teacher);
+				teacherList.replace(teacherSalary, teacher);
+				teacherList.replace(teacherTitle, teacher);
 
-				txtAreaTeacher.setText("The teacher: " + TeacherName + TeacherLastname + " was updated" +  "\n" + "Employee ID: " 
-				+ TeacherID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:" + TeacherSalary); // + "\n"  + "Title: " + TeacherTitle);
+				txtAreaTeacher.setText("The teacher: " + teacherName + teacherLastname + " was updated" + "\n"
+						+ "Employee ID: " + teacherID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
+						+ teacherSalary); // + "\n" + "Title: " + TeacherTitle);
 
 			} else
 
@@ -625,10 +611,5 @@ tableViewTeacher.setItems(null);;
 			txtAreaTeacher.setText("Teacher Salary must be written in numbers");
 		}
 	}
-	
+
 }
-
-
-
-
-
