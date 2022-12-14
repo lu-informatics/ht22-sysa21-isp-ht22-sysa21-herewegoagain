@@ -4,18 +4,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import application.Course;
+import application.Department;
+import application.Teacher;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class SampleController {
 
@@ -83,12 +99,6 @@ public class SampleController {
 	private ComboBox<?> comboBoxTeachingTeacher;
 
 	@FXML
-	private TableView<?> tableViewCourse;
-
-	@FXML
-	private TableView<?> tableViewDepartment;
-
-	@FXML
 	private TableView<?> tableViewResponsibility;
 
 	@FXML
@@ -148,51 +158,97 @@ public class SampleController {
 	@FXML
 	private TextField txtTeachingHours;
 
-	
+	// Course Lists
+
+	HashMap<String, Course> courseList = new HashMap<String, Course>();
+
+	// ObservableList from the HashMap - This is to keep track of
+	// changes in the HashMap
+	ObservableList<Course> courses = FXCollections.observableArrayList();
+
+	@FXML
+	private TableView<Course> tableViewCourse = new TableView<>();
+
+	@FXML
+	private TableColumn<Course, String> tableColumnCourseCode = new TableColumn<>("Key");
+
+	@FXML
+	private TableColumn<Course, String> tableColumnCourseName = new TableColumn<>("Value");
+
+	@FXML
+	private TableColumn<Course, Integer> tableColumnCourseCredits = new TableColumn<>("Value");
+
+	@FXML
+	private TableColumn<Course, String> tableColumnCourseCycle = new TableColumn<>("Value");
+
+	// Department Lists
+
+	Map<String, Department> departmentList = new HashMap<>();
+
+	ObservableList<Department> departments = FXCollections.observableArrayList();
+
+	@FXML
+	private TableView<Department> tableViewDepartment;
+
+	@FXML
+	private TableColumn<Department, String> tableColumnDepartmentName = new TableColumn<>("Key");
+
+	@FXML
+	private TableColumn<Department, String> tableColumnDepartmentAddress = new TableColumn<>("Value");
+
+	@FXML
+	private TableColumn<Department, Double> tableColumnDepartmentBudget = new TableColumn<>("Value");
 
 	public void initialize() {
-	
+
+		// TableColumn Course
+
+		tableColumnCourseCode.setCellValueFactory(new PropertyValueFactory<Course, String>("courseCode"));
+		tableColumnCourseName.setCellValueFactory(new PropertyValueFactory<Course, String>("courseName"));
+		tableColumnCourseCredits.setCellValueFactory(new PropertyValueFactory<Course, Integer>("courseCredit"));
+		tableColumnCourseCycle.setCellValueFactory(new PropertyValueFactory<Course, String>("courseCycle"));
+
+		// TableView Course
+		tableViewCourse.setItems(courses);
+
+		// TableColumn Department
+
+		tableColumnDepartmentName.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentName"));
+		tableColumnDepartmentAddress.setCellValueFactory(new PropertyValueFactory<Department, String>("departmentAddress"));
+		tableColumnDepartmentBudget.setCellValueFactory(new PropertyValueFactory<Department, Double>("budget"));
+
+		// TableView Department
+
+		tableViewDepartment.setItems(departments);
+
 		// Populating Course ComboBox
-		 // Course
+		// Course
 		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle");
 		comboBoxCourseCycle.getSelectionModel().selectFirst();
-		
-		/* Course Responsibility
-		//for(Course course : courseList.containsKey(courseCode)) {
-			
-		}
-		
-		comboBoxResponsibilityCourse.getItems().add(courseList.get(""+courseList).getCourseCode());
-		comboBoxResponsibilityCourse.getSelectionModel().selectFirst();
-		comboBoxTeachingCourse.getSelectionModel().selectFirst();
 
-		*/
-		
+		/*
+		 * Course Responsibility //for(Course course :
+		 * courseList.containsKey(courseCode)) {
+		 * 
+		 * }
+		 * 
+		 * comboBoxResponsibilityCourse.getItems().add(courseList.get(""+courseList).
+		 * getCourseCode());
+		 * comboBoxResponsibilityCourse.getSelectionModel().selectFirst();
+		 * comboBoxTeachingCourse.getSelectionModel().selectFirst();
+		 * 
+		 */
+
 	}
-
-// Course Lists
-	// Key , Value
-	HashMap<String, Course> courseList = new HashMap<>();
-
-	// Synchronizing the HashMap
-	Map<String, Course> courseMap = Collections.synchronizedMap(courseList);
-
-//Department Lists
-	// Key , Value
-	HashMap<String, Department> departmentList = new HashMap<>();
-
-	// Synchronizing the HashMap
-	Map<String, Department> depMap = Collections.synchronizedMap(departmentList);
-
-	// Departments depList = Departments;
-
+ 
 	// Create Course
+
 	public void btnCourseCreate(ActionEvent event) {
 
 		String courseCode = txtCourseCode.getText();
 		String courseName = txtCourseName.getText();
 		String stringCourseCredit = txtCourseCredit.getText();
-		String courseCycle = comboBoxCourseCycle.getValue();
+		String courseCycle = comboBoxCourseCycle.getValue().toString();
 
 		try {
 			if (txtCourseCode.getText().isEmpty() || txtCourseName.getText().isEmpty()
@@ -203,7 +259,7 @@ public class SampleController {
 
 				int courseCredit = Integer.parseInt(stringCourseCredit);
 
-				if (!courseList.containsKey(courseCode) || !courseMap.containsKey(courseCode)) {
+				if (!courseList.containsKey(courseCode)) {
 
 					if (courseCredit < 0) {
 
@@ -214,14 +270,11 @@ public class SampleController {
 
 							Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
 
-							course.setCourseCode(courseCode);
-							course.setCourseName(courseName);
-							course.setCourseCredit(courseCredit);
-							course.setCourseCycle(courseCycle);
+							tableViewCourse.refresh();
+
 
 							courseList.put(courseCode, course);
-							
-						
+							courses.add(courseList.get(courseCode));
 
 							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
 									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
@@ -232,7 +285,7 @@ public class SampleController {
 						}
 					}
 				} else {
-					txtAreaCourse.setText("Error: A course with that code (" + courseMap.get(courseCode).getCourseCode()
+					txtAreaCourse.setText("Error: A course with that code (" + courseCode
 							+ ") already exists.\nPlease make sure to use another Course code");
 				}
 
@@ -257,8 +310,7 @@ public class SampleController {
 
 			Course course = courseList.get(courseCode);
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (courseList.containsKey(courseCode)
-			/* && department.equals(departmentNameList.get(departmentName)) */) {
+			if (courseList.containsKey(courseCode)) {
 
 				courseList.get(courseCode);
 				courseList.remove(courseCode, course);
@@ -303,7 +355,7 @@ public class SampleController {
 		}
 
 		// Check if the departmentName is already in the departmentNameList HashMap
-		if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+		if (departmentList.containsKey(departmentName)) {
 			txtAreaDepartment.setText(
 					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
 			return;
@@ -320,6 +372,7 @@ public class SampleController {
 
 		// Add the department to the HashMap
 		departmentList.put(departmentName, dep);
+		departments.add(departmentList.get(departmentName));
 
 		// Print a success message
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
@@ -342,12 +395,13 @@ public class SampleController {
 			}
 
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (departmentList.containsKey(departmentName) || depMap.containsKey(departmentName)) {
+			if (departmentList.containsKey(departmentName)) {
 
 				// Get the value Department (named department) where the Key = departmentName
 				Department department = departmentList.get(departmentName);
 
 				// Set the new values
+				departmentList.replace(departmentBudget, department, department);
 				department.setDepartmentAddress(departmentAddress);
 				department.setBudget(Double.parseDouble(departmentBudget));
 
@@ -377,8 +431,7 @@ public class SampleController {
 
 			Department dep = departmentList.get(departmentName);
 			// Check if the departmentName is already in the departmentNameList HashMap
-			if (departmentList.containsKey(departmentName)
-			/* && department.equals(departmentNameList.get(departmentName)) */) {
+			if (departmentList.containsKey(departmentName)) {
 
 				departmentList.get(departmentName);
 				departmentList.remove(departmentName, dep);

@@ -42,7 +42,7 @@ public class Course {
 		this.courseCredit = courseCredit;
 	}
 
-	public String getcourseCycle() {
+	public String getCourseCycle() {
 		return courseCycle;
 	}
 
