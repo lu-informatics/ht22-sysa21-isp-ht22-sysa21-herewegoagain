@@ -84,13 +84,13 @@ public class SampleController {
 	private ComboBox<String> comboBoxCourseCycle;
 
 	@FXML
-	private ComboBox<?> comboBoxResponsibilityCourse;
+	private ComboBox<String> comboBoxResponsibilityCourse;
 
 	@FXML
-	private ComboBox<?> comboBoxResponsibilityTeacher;
+	private ComboBox<String> comboBoxResponsibilityTeacher;
 
 	@FXML
-	private ComboBox<?> comboBoxTeacherTitle;
+	private ComboBox<String> comboBoxTeacherTitle;
 
 	@FXML
 	private ComboBox<?> comboBoxTeachingCourse;
@@ -165,8 +165,8 @@ public class SampleController {
 	// ObservableList from the HashMap - This is to keep track of
 	// changes in the HashMap
 	ObservableList<Course> courses = FXCollections.observableArrayList();
-
-	@FXML
+	
+  @FXML
 	private TableView<Course> tableViewCourse = new TableView<>();
 
 	@FXML
@@ -181,12 +181,12 @@ public class SampleController {
 	@FXML
 	private TableColumn<Course, String> tableColumnCourseCycle = new TableColumn<>("Value");
 
-	// Department Lists
+  // Department Lists
 
 	Map<String, Department> departmentList = new HashMap<>();
 
 	ObservableList<Department> departments = FXCollections.observableArrayList();
-
+  
 	@FXML
 	private TableView<Department> tableViewDepartment;
 
@@ -241,7 +241,20 @@ public class SampleController {
 
 	}
  
-	// Create Course
+//Populating ComboBoxes
+	public void initialize() {
+		// Teacher
+		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
+		// Course
+		comboBoxCourseCycle.getItems().addAll("First Cycle", "Second Cycle", "Third Cycle"); // Add the "names" in the
+																								// cycles?
+		// Course Responsibility //Lista över Teacher och Courses behövs
+		
+		
+		// Teaching
+	}
+
+// Create Course
 
 	public void btnCourseCreate(ActionEvent event) {
 
@@ -329,7 +342,6 @@ public class SampleController {
 
 		}
 	}
-
 	// Create Department
 
 	public void btnDepartmentCreate(ActionEvent event) {
@@ -378,6 +390,7 @@ public class SampleController {
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
 				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
 	}
+
 
 	// update
 	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
