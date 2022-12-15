@@ -498,50 +498,64 @@ public class SampleController {
 
 	public void btnTeacherCreate(ActionEvent event) {
 
-		String TeacherName = txtTeacherName.getText();
-		String TeacherLastname = txtTeacherLastname.getText();
-		String TeacherAddress = txtTeacherAddress.getText();
-		String TeacherID = txtTeacherEmployeeID.getText();
-		String TeacherSalary = txtTeacherHourlySalary.getText();
-		String TeacherTitle = comboBoxTeacherTitle.getValue();
+		String teacherName = txtTeacherName.getText();
+		String teacherLastname = txtTeacherLastname.getText();
+		String teacherAddress = txtTeacherAddress.getText();
+		String teacherID = txtTeacherEmployeeID.getText();
+		String teacherSalary = txtTeacherHourlySalary.getText();
+		String teacherTitle = comboBoxTeacherTitle.getValue();
 
-		if (TeacherName.isEmpty() || TeacherLastname.isEmpty() || TeacherAddress.isEmpty() || TeacherID.isEmpty()
-				|| TeacherSalary.isEmpty()) {
+		if (teacherName.isEmpty() || teacherLastname.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
+				|| teacherSalary.isEmpty() || teacherTitle.isEmpty())  {
 			txtAreaTeacher.setText("Please make sure all required fields have been filled in");
 			return;
 		}
 
-		int Salary;
+		int salary;
 		try {
-			Salary = Integer.parseInt(TeacherSalary);
+			salary = Integer.parseInt(teacherSalary);
 
 		} catch (NumberFormatException e) {
 			txtAreaTeacher.setText("Teacher salary must be written in numbers");
 			return;
 		}
 
-		if (teacherList.containsKey(TeacherID)) {
-			txtAreaTeacher.setText("A teacher with id: " + TeacherID + " already exist");
+		if (teacherList.containsKey(teacherID)) {
+			txtAreaTeacher.setText("A teacher with id: " + teacherID + " already exist");
+			return;
+		}
+			
+		int ID;
+		try {
+			ID = Integer.parseInt(teacherID);
+		} catch (NumberFormatException e) {
+			txtAreaTeacher.setText("Teacher ID must be written in numbers");
 			return;
 
 		}
 
-		if (Salary < 0) {
+		if (salary < 0) {
 			txtAreaTeacher.setText("Salary cannot be negative value");
 			return;
 		}
 
-		int ID = Integer.parseInt(TeacherID);
-		Teacher teacher = new Teacher(ID, TeacherName, TeacherLastname, TeacherTitle, TeacherAddress, Salary);
+		Teacher teacher = new Teacher(ID, teacherName, teacherLastname, teacherTitle, teacherAddress, salary);
 
-// Add the department to the HashMap
-		teacherList.put(TeacherID, teacher);
-		teachers.add(teacherList.get(TeacherID));
+// Add the teacher to the HashMap
+		teacherList.put(teacherID, teacher);
+		teachers.add(teacherList.get(teacherID));
 
 // Print a success message
-		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + TeacherName + " " + TeacherLastname
-				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + TeacherAddress + "\n" + "Hourly salary:"
-				+ Salary); // + "\n" + "Title: " + TeacherTitle);
+		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
+				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
+				+ salary + "\n" + "Title: " + teacherTitle);
+		txtTeacherName.clear();
+		txtTeacherLastname.clear();
+		txtTeacherAddress.clear();
+		txtTeacherEmployeeID.clear();
+		txtTeacherHourlySalary.clear();
+		
+		
 	}
 
 	public void btnTeacherDelete(ActionEvent event) {
@@ -603,9 +617,9 @@ public class SampleController {
 				teacherList.replace(teacherSalary, teacher);
 				teacherList.replace(teacherTitle, teacher);
 
-				txtAreaTeacher.setText("The teacher: " + teacherName + teacherLastname + " was updated" + "\n"
+				txtAreaTeacher.setText("The teacher: " + teacherName + " " +  teacherLastname + " was updated" + "\n"
 						+ "Employee ID: " + teacherID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
-						+ teacherSalary); // + "\n" + "Title: " + TeacherTitle);
+						+ teacherSalary + "\n" + "Title: " + teacherTitle);
 
 			} else
 
