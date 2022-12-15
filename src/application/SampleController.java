@@ -286,62 +286,52 @@ public class SampleController {
 // Create Course
 
 	public void btnCourseCreate(ActionEvent event) {
-
 		String courseCode = txtCourseCode.getText();
 		String courseName = txtCourseName.getText();
 		String stringCourseCredit = txtCourseCredit.getText();
-		String courseCycle = comboBoxCourseCycle.getValue().toString();
+		String courseCycle = comboBoxCourseCycle.getValue();
 
+		if (txtCourseCode.getText().isEmpty() || txtCourseName.getText().isEmpty()
+				|| txtCourseCredit.getText().isEmpty()) {
+			// Print an error message if any of the values are empty
+			txtAreaCourse.setText("Error: course code, name, credits and cycle \nmust not be empty ");
+			return;
+		}
+		// Parse the credit as a int
+		int courseCredit;
 		try {
-			if (txtCourseCode.getText().isEmpty() || txtCourseName.getText().isEmpty()
-					|| txtCourseCredit.getText().isEmpty()) {
-				// Print an error message if any of the values are empty
-				txtAreaCourse.setText("Error: course code, name, credits and cycle \nmust not be empty ");
-			} else {
-
-				int courseCredit = Integer.parseInt(stringCourseCredit);
-
-				if (!courseList.containsKey(courseCode)) {
-
-					if (courseCredit < 0) {
-
-						txtAreaCourse.setText("Course credit cannot be a negative value");
-					} else {
-
-						if (courseCycle != null) {
-
-							Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
-
-							tableViewCourse.refresh();
-
-							courseList.put(courseCode, course);
-							courses.add(courseList.get(courseCode));
-
-							txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n"
-									+ "Name:  " + courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: "
-									+ courseCycle);
-
-						} else {
-							txtAreaCourse.setText("Error: Cycle may not be empty");
-						}
-					}
-				} else {
-					txtAreaCourse.setText("Error: A course with that code (" + courseCode
-							+ ") already exists.\nPlease make sure to use another Course code");
-				}
-
-			}
-
-		}
-
-		catch (NumberFormatException e) {
+			courseCredit = Integer.parseInt(stringCourseCredit);
+		} catch (NumberFormatException e) {
 			txtAreaCourse.setText("Course credit must be written in numbers");
+			return;
 		}
+
+		// Check if the courseCode is already in the coureList HashMap
+		if (courseList.containsKey(courseCode)) {
+			txtAreaCourse.setText(
+					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
+			return;
+		}
+
+		// Check that courseCredit is not a negative value
+		if (courseCredit < 0) {
+			txtAreaCourse.setText("Course credit cannot be a negative value");
+			return;
+		}
+		// Create a new Course object with the given values
+		Course course = new Course(courseCode, courseName, courseCredit, courseCycle);
+
+		// Add the course to the HashMap
+		courseList.put(courseCode, course);
+		courses.add(courseList.get(courseCode));
+
+		txtAreaDepartment.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n" + "Name:  "
+				+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
 	}
 
-	// Delete Course
+	// Update Course
 
-	// Overkill men den funkar
+	// Delete Course
 	public void btnCourseDelete(ActionEvent event) {
 
 		String courseCode = txtCourseCode.getText();
@@ -466,7 +456,7 @@ public class SampleController {
 	public void btnDepartmentDelete(ActionEvent event) {
 
 		String departmentName = txtDepartmentName.getText();
-		
+
 		// ComboBox later
 		if (!departmentName.isEmpty()) {
 
@@ -474,7 +464,6 @@ public class SampleController {
 			// Check if the departmentName is already in the departmentNameList HashMap
 			if (departmentList.containsKey(departmentName)) {
 
-				
 				departmentList.get(departmentName);
 				departments.remove(departmentList.get(departmentName));
 				departmentList.remove(departmentName, dep);
@@ -506,7 +495,7 @@ public class SampleController {
 		String teacherTitle = comboBoxTeacherTitle.getValue();
 
 		if (teacherName.isEmpty() || teacherLastname.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
-				|| teacherSalary.isEmpty() || teacherTitle.isEmpty())  {
+				|| teacherSalary.isEmpty() || teacherTitle.isEmpty()) {
 			txtAreaTeacher.setText("Please make sure all required fields have been filled in");
 			return;
 		}
@@ -524,7 +513,7 @@ public class SampleController {
 			txtAreaTeacher.setText("A teacher with id: " + teacherID + " already exist");
 			return;
 		}
-			
+
 		int ID;
 		try {
 			ID = Integer.parseInt(teacherID);
@@ -547,15 +536,14 @@ public class SampleController {
 
 // Print a success message
 		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
-				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
-				+ salary + "\n" + "Title: " + teacherTitle);
+				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
+				+ "\n" + "Title: " + teacherTitle);
 		txtTeacherName.clear();
 		txtTeacherLastname.clear();
 		txtTeacherAddress.clear();
 		txtTeacherEmployeeID.clear();
 		txtTeacherHourlySalary.clear();
-		
-		
+
 	}
 
 	public void btnTeacherDelete(ActionEvent event) {
@@ -617,7 +605,7 @@ public class SampleController {
 				teacherList.replace(teacherSalary, teacher);
 				teacherList.replace(teacherTitle, teacher);
 
-				txtAreaTeacher.setText("The teacher: " + teacherName + " " +  teacherLastname + " was updated" + "\n"
+				txtAreaTeacher.setText("The teacher: " + teacherName + " " + teacherLastname + " was updated" + "\n"
 						+ "Employee ID: " + teacherID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
 						+ teacherSalary + "\n" + "Title: " + teacherTitle);
 
