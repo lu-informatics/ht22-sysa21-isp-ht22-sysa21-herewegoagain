@@ -16,7 +16,7 @@ public class TeacherRegister {
 
 	public Teacher findTeacher(int employeeId) {
 		for (Teacher teacher : teacherReg) {
-			if (teacher.getEmployeeId() == (employeeId)) {
+			if (teacher.getEmployeeID() == (employeeId)) {
 				return teacher;
 			}
 		}
@@ -24,7 +24,7 @@ public class TeacherRegister {
 	}
 
 	public void addTeacher(Teacher teacher) {
-		if (this.findTeacher(teacher.getEmployeeId()) == null) {
+		if (this.findTeacher(teacher.getEmployeeID()) == null) {
 			teacherReg.add(teacher);
 		}
 	}
