@@ -2,6 +2,8 @@ package application;
 
 import java.util.ArrayList;
 
+import sofias.Project;
+
 
 public class Teacher {
 	
@@ -83,6 +85,19 @@ public class Teacher {
 	public void setResponsible(ArrayList<Course> responsible) {
 		this.responsible = responsible;
 	}
+	public  void addCourseResponsible(Course course) {
+		this.responsible.add(course);
+		
+	}
+	public Course findCourseResponsible(String courseCode) {
+		for (Course course : this.getResponsible()) {
+			if (courseCode == course.getCourseCode())
+				return course;
+		}
+		return null;
 
 	}
-
+	public void removeCourseResponsible(Course course) {
+		getResponsible().remove(course.getCourseCode());
+	}
+}

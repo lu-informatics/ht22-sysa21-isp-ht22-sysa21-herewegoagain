@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <top>
       <TabPane prefHeight="405.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -111,7 +111,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnResponsibilityGive" layoutX="43.0" layoutY="208.0" mnemonicParsing="false" text="Give Course Responsibility" />
+                        <Button fx:id="btnResponsibilityGive" layoutX="43.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnResponsibilityGive" text="Give Course Responsibility" />
                         <TableView fx:id="tableViewResponsibility" layoutX="274.0" layoutY="129.0" prefHeight="226.0" prefWidth="312.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="Employee ID" />
@@ -125,7 +125,7 @@
                         <TextArea fx:id="txtAreaResponsibility" layoutX="274.0" layoutY="21.0" prefHeight="72.0" prefWidth="295.0" />
                         <ComboBox fx:id="comboBoxResponsibilityTeacher" layoutX="50.0" layoutY="32.0" prefWidth="150.0" promptText="Teacher" />
                         <ComboBox fx:id="comboBoxResponsibilityCourse" layoutX="50.0" layoutY="104.0" prefWidth="150.0" promptText="Course" />
-                        <Button fx:id="btnResponsibilityRemove" layoutX="33.0" layoutY="241.0" mnemonicParsing="false" text="Remove Course Responsibility" />
+                        <Button fx:id="btnResponsibilityRemove" layoutX="33.0" layoutY="241.0" mnemonicParsing="false" onAction="#btnResponsibilityRemove" text="Remove Course Responsibility" />
                      </children>
                   </AnchorPane>
                </content>
