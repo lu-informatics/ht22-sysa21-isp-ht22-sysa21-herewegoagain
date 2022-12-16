@@ -373,6 +373,10 @@ public class SampleController {
 
 		txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n" + "Name:  "
 				+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
+		
+		txtCourseCode.clear();
+		txtCourseName.clear();
+		txtCourseCredit.clear();
 	}
 
 	// Update Course
@@ -382,6 +386,7 @@ public class SampleController {
 		String courseName = txtCourseName.getText();
 		String stringCourseCredit = txtCourseCredit.getText();
 		String courseCycle = comboBoxCourseCycle.getValue();
+		
 		try {
 			int courseCredit;
 
@@ -402,6 +407,10 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Name was updated for ("+courseCode +")");
+					
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
 
 				}
 
@@ -416,6 +425,10 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Credit was updated for ("+courseCode +")");
+					
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
 				}
 
 				// Update courseCycle
@@ -429,6 +442,10 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Cycle was updated for ("+courseCode +")");
+					
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
 				}
 
 				// Update all
@@ -445,6 +462,10 @@ public class SampleController {
 					
 					txtAreaCourse.setText("Course Name, Credit and Cycke was updated for ("+courseCode +")");
 					
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
+					
 				}
 				// No Update
 				if (c.getCourseName().equals(courseName) && c.getCourseCredit() == courseCredit
@@ -452,6 +473,7 @@ public class SampleController {
 
 					txtAreaCourse.setText("You have to make a change on Course(" +courseCode+") "
 							+ "\n in order to update");
+					
 				}
 
 			} else {
@@ -482,6 +504,7 @@ public class SampleController {
 				courseList.remove(courseReg.findCourse(courseCode));
 				courseReg.removeCourse(courseCode);
 				txtAreaCourse.setText("The course (" + courseCode + ") was deleted");
+				
 
 			}
 
@@ -541,6 +564,10 @@ public class SampleController {
 		// Print a success message
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
 				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+		
+		txtDepartmentName.clear();
+		txtDepartmentAddress.clear();
+		txtDepartmentBudget.clear();
 	}
 
 	// update
@@ -551,6 +578,7 @@ public class SampleController {
 		String departmentName = txtDepartmentName.getText();
 		String departmentAddress = txtDepartmentAddress.getText();
 		String departmentBudget = txtDepartmentBudget.getText(); // ändra som i 156
+		
 		try {
 			if (departmentName.isEmpty()) {
 				txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to update");
@@ -585,6 +613,10 @@ public class SampleController {
 						departmentList.add(dep);
 
 						txtAreaDepartment.setText("Updated Budget of Department (" + departmentName + ")");
+						
+						txtDepartmentName.clear();
+						txtDepartmentAddress.clear();
+						txtDepartmentBudget.clear();
 
 					}
 					// if the budget is the same as in depReg, update departmentAddress
@@ -599,6 +631,10 @@ public class SampleController {
 						departmentList.add(dep);
 
 						txtAreaDepartment.setText("Updated Adress of Department (" + departmentName + ")");
+						
+						txtDepartmentName.clear();
+						txtDepartmentAddress.clear();
+						txtDepartmentBudget.clear();
 
 					}
 					// Om ingen är lik, ändra båda
@@ -626,6 +662,10 @@ public class SampleController {
 
 						txtAreaDepartment
 								.setText("Updated Address and Budget of \n" + "Department(" + departmentName + ")");
+						
+						txtDepartmentName.clear();
+						txtDepartmentAddress.clear();
+						txtDepartmentBudget.clear();
 
 					}
 
@@ -735,15 +775,15 @@ public class SampleController {
 
 // Add the teacher to the teacherReg
 		teacherReg.addTeacher(teacher);
-		teacherList.add(teacherReg.findTeacher(ID));
+		teacherList.add(teacherReg.findTeacher(iD));
 		teachers.add(teacherID);
 
 // Print a success message
 		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
-				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
+				+ "\n" + "Employee ID: " + iD + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
 				+ "\n" + "Title: " + teacherTitle);
 		txtTeacherName.clear();
-		txtTeacherLastname.clear();
+		txtTeacherLastName.clear();
 		txtTeacherAddress.clear();
 		txtTeacherEmployeeID.clear();
 		txtTeacherHourlySalary.clear();
@@ -783,6 +823,12 @@ public class SampleController {
 				teacherReg.removeTeacher(iD);
 				txtAreaTeacher.setText("The teacher with ID(" + teacherID + ") was deleted");
 
+				txtTeacherName.clear();
+				txtTeacherLastName.clear();
+				txtTeacherAddress.clear();
+				txtTeacherEmployeeID.clear();
+				txtTeacherHourlySalary.clear();
+				
 			}
 
 		} else {
@@ -832,6 +878,12 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					
 				}
 				// Update LastName
 				if (t.getTeacherName().equals(teacherName) && t.getTeacherAddress().equals(teacherAddress)
@@ -848,6 +900,12 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Last Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					
 				}
 				// Update Address
 				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
@@ -864,6 +922,11 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
 				}
 				// Updated Salary
 				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
@@ -888,6 +951,11 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Salary changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
 				}
 
 				// Update Title
@@ -905,6 +973,11 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Title changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
 				}
 
 				if (!t.getTeacherLastName().equals(teacherLastName) && !t.getTeacherName().equals(teacherName)
@@ -930,6 +1003,11 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Name, Last Name, Address, Salary and Title was changed for\n"
 							+ "Teacher with Employee ID(" + iD + ")");
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
 				}
 
 				// If everything is the same, no change will be made
@@ -983,26 +1061,28 @@ public class SampleController {
 	
 	public void btnResponsibilityRemove(ActionEvent event) {
 		String teacherId = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
-		String coursecode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
-		Course course = courseReg.findCourse((coursecode));
+		String courseCode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
+		//Course course = courseReg.findCourse((courseCode));
 		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
 		
-		if (teacher.findCourseResponsible(coursecode) == null) {
+		if (teacher.findCourseResponsible(courseCode) == null) {
 			txtAreaResponsibility.setText("Teacher with ID: " + teacherId + ", \n is not responsible for this course");
 			return;
 		}
 		
-		if (teacherId != null || coursecode != null) {
-			teacher.removeCourseResponsible(course);
+		if (teacherId != null || courseCode != null) {
+			teacher.removeCourseResponsible(courseCode);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
-					+ " course with course code: " + coursecode);
-			
+					+ " course with course code: " + courseCode);
+			return;
 			
 		}else { txtAreaResponsibility.setText("Please make sure you have selected a teacher and a course");
 			
 		}
 		
 	}
+	
+
 	}
 
 

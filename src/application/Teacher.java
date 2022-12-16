@@ -111,7 +111,12 @@ public class Teacher {
 		return null;
 
 	}
-	public void removeCourseResponsible(Course course) {
-		getResponsible().remove(course.getCourseCode());
+	public Course removeCourseResponsible(String courseCode) {
+		for (Course c : this.getResponsible()) {
+			if (c != null) {
+			getResponsible().remove(c);	
+			}
+	}
+		return null;
 	}
 }
