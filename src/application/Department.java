@@ -56,7 +56,7 @@ public class Department {
 	
 	public Teacher findTeacher(int employeeID) {
 		for (Teacher a : this.getTeacherList()) {
-			if (employeeID == a.getEmployeeId())
+			if (employeeID == a.getEmployeeID())
 				return a;
 		}
 		return null;

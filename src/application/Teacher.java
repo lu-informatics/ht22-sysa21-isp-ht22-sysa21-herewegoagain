@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 public class Teacher {
 	
-	private int employeeId;
+	private int employeeID;
 	private String teacherName;
 	private String teacherLastName;
-	private String teacherTitle;
 	private String teacherAddress;
-	private int hSalary; //may not be negative
+	private double hourlySalary; //may not be negative
+	private String teacherTitle;	
+	
 	private Department department;
 	
 	private ArrayList<Course> teaching = new ArrayList<>();
@@ -19,19 +20,19 @@ public class Teacher {
 	
 	
 	//Constructor
-	public Teacher(int employeeId, String teacherName, String teacherLastname, String teacherTitle, String teacherAddress, int hSalary) {
-		this.employeeId = employeeId;
+	public Teacher(int employeeID, String teacherName, String teacherLastname, String teacherTitle, String teacherAddress, double hourlySalary) {
+		this.employeeID = employeeID;
 		this.teacherName = teacherName;
 		this.teacherTitle = teacherTitle;
 		this.teacherAddress = teacherAddress;
-		this.hSalary = hSalary;
+		this.hourlySalary = hourlySalary;
 	}
 	//Getters and setters
-	public int getEmployeeId() {
-		return employeeId;
+	public int getEmployeeID() {
+		return employeeID;
 	}
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployeeID(int employeeID) {
+		this.employeeID = employeeID;
 	}
 	public String getTeacherName() {
 		return teacherName;
@@ -39,11 +40,11 @@ public class Teacher {
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
 	}
-	public String getTitle() {
+	public String getTeacherTitle() {
 		return teacherTitle;
 	}
-	public void setTitle(String title) {
-		this.teacherTitle = title;
+	public void setTeacherTitle(String teacherTitle) {
+		this.teacherTitle = teacherTitle;
 	}
 	public String getTeacherAddress() {
 		return teacherAddress;
@@ -51,11 +52,11 @@ public class Teacher {
 	public void setTeacherAddress(String teacherAddress) {
 		this.teacherAddress = teacherAddress;
 	}
-	public int gethSalary() {
-		return hSalary;
+	public double getHourlySalary() {
+		return hourlySalary;
 	}
-	public void sethSalary(int hSalary) {
-		this.hSalary = hSalary;
+	public void setHourlySalary(double hourlySalary) {
+		this.hourlySalary = hourlySalary;
 	
 	}
 	public Department getDepartment() {
