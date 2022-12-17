@@ -21,6 +21,7 @@ public class Teacher {
 			String teacherAddress, double hourlySalary) {
 		this.employeeID = employeeID;
 		this.teacherName = teacherName;
+		this.teacherLastName = teacherLastName;
 		this.teacherTitle = teacherTitle;
 		this.teacherAddress = teacherAddress;
 		this.hourlySalary = hourlySalary;
@@ -109,6 +110,7 @@ public class Teacher {
 				return course;
 		}
 		return null;
+		
 
 	}
 	public Course removeCourseResponsible(String courseCode) {
@@ -119,4 +121,16 @@ public class Teacher {
 	}
 		return null;
 	}
+	
+	public  void addCourseTeaching(Course course) {
+		this.teaching.add(course);
+	}
+	
+	public Course findCourseTeaching(String courseCode) {
+		for (Course course : this.getTeaching()) {
+			if (courseCode == course.getCourseCode())
+				return course;
+		}
+		return null;
+}
 }

@@ -94,13 +94,13 @@ public class SampleController {
 	private ComboBox<String> comboBoxTeacherTitle;
 
 	@FXML
-	private ComboBox<?> comboBoxTeachingCourse;
+	private ComboBox<String> comboBoxTeachingCourse;
 
 	@FXML
-	private ComboBox<?> comboBoxTeachingTeacher;
+	private ComboBox<String> comboBoxTeachingTeacher;
 
 	@FXML
-	private TableView<?> tableViewResponsibility;
+	private TableView<String> tableViewResponsibility;
 
 	@FXML
 	private TableView<?> tableViewTeaching;
@@ -321,6 +321,11 @@ public class SampleController {
 		comboBoxResponsibilityCourse.setItems(courses);
 		comboBoxResponsibilityTeacher.setItems(teachers);
 
+		
+		// Teaching //Lista över Teacher och Courses behövs
+		comboBoxTeachingTeacher.setItems(teachers);
+		comboBoxTeachingCourse.setItems(courses);
+		
 		// Populating Teacher Title Combobox
 		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
 		comboBoxTeacherTitle.getSelectionModel().selectFirst();
@@ -373,10 +378,6 @@ public class SampleController {
 
 		txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n" + "Name:  "
 				+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
-		
-		txtCourseCode.clear();
-		txtCourseName.clear();
-		txtCourseCredit.clear();
 	}
 
 	// Update Course
@@ -386,7 +387,6 @@ public class SampleController {
 		String courseName = txtCourseName.getText();
 		String stringCourseCredit = txtCourseCredit.getText();
 		String courseCycle = comboBoxCourseCycle.getValue();
-		
 		try {
 			int courseCredit;
 
@@ -407,10 +407,6 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Name was updated for ("+courseCode +")");
-					
-					txtCourseCode.clear();
-					txtCourseName.clear();
-					txtCourseCredit.clear();
 
 				}
 
@@ -425,10 +421,6 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Credit was updated for ("+courseCode +")");
-					
-					txtCourseCode.clear();
-					txtCourseName.clear();
-					txtCourseCredit.clear();
 				}
 
 				// Update courseCycle
@@ -442,10 +434,6 @@ public class SampleController {
 					courseList.add(updatedCourse);
 					
 					txtAreaCourse.setText("Course Cycle was updated for ("+courseCode +")");
-					
-					txtCourseCode.clear();
-					txtCourseName.clear();
-					txtCourseCredit.clear();
 				}
 
 				// Update all
@@ -462,10 +450,6 @@ public class SampleController {
 					
 					txtAreaCourse.setText("Course Name, Credit and Cycke was updated for ("+courseCode +")");
 					
-					txtCourseCode.clear();
-					txtCourseName.clear();
-					txtCourseCredit.clear();
-					
 				}
 				// No Update
 				if (c.getCourseName().equals(courseName) && c.getCourseCredit() == courseCredit
@@ -473,7 +457,6 @@ public class SampleController {
 
 					txtAreaCourse.setText("You have to make a change on Course(" +courseCode+") "
 							+ "\n in order to update");
-					
 				}
 
 			} else {
@@ -504,7 +487,6 @@ public class SampleController {
 				courseList.remove(courseReg.findCourse(courseCode));
 				courseReg.removeCourse(courseCode);
 				txtAreaCourse.setText("The course (" + courseCode + ") was deleted");
-				
 
 			}
 
@@ -564,10 +546,10 @@ public class SampleController {
 		// Print a success message
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
 				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
-		
 		txtDepartmentName.clear();
 		txtDepartmentAddress.clear();
 		txtDepartmentBudget.clear();
+
 	}
 
 	// update
@@ -578,7 +560,6 @@ public class SampleController {
 		String departmentName = txtDepartmentName.getText();
 		String departmentAddress = txtDepartmentAddress.getText();
 		String departmentBudget = txtDepartmentBudget.getText(); // ändra som i 156
-		
 		try {
 			if (departmentName.isEmpty()) {
 				txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to update");
@@ -613,10 +594,6 @@ public class SampleController {
 						departmentList.add(dep);
 
 						txtAreaDepartment.setText("Updated Budget of Department (" + departmentName + ")");
-						
-						txtDepartmentName.clear();
-						txtDepartmentAddress.clear();
-						txtDepartmentBudget.clear();
 
 					}
 					// if the budget is the same as in depReg, update departmentAddress
@@ -631,10 +608,6 @@ public class SampleController {
 						departmentList.add(dep);
 
 						txtAreaDepartment.setText("Updated Adress of Department (" + departmentName + ")");
-						
-						txtDepartmentName.clear();
-						txtDepartmentAddress.clear();
-						txtDepartmentBudget.clear();
 
 					}
 					// Om ingen är lik, ändra båda
@@ -662,10 +635,6 @@ public class SampleController {
 
 						txtAreaDepartment
 								.setText("Updated Address and Budget of \n" + "Department(" + departmentName + ")");
-						
-						txtDepartmentName.clear();
-						txtDepartmentAddress.clear();
-						txtDepartmentBudget.clear();
 
 					}
 
@@ -728,14 +697,14 @@ public class SampleController {
 	public void btnTeacherCreate(ActionEvent event) {
 
 		String teacherName = txtTeacherName.getText();
-		String teacherLastname = txtTeacherLastName.getText();
+		String teacherLastName = txtTeacherLastName.getText();
 		String teacherAddress = txtTeacherAddress.getText();
 		String teacherID = txtTeacherEmployeeID.getText();
 		String teacherSalary = txtTeacherHourlySalary.getText();
 		String teacherTitle = comboBoxTeacherTitle.getValue();
 
 		try {
-			if (teacherName.isEmpty() || teacherLastname.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
+			if (teacherName.isEmpty() || teacherLastName.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
 					|| teacherSalary.isEmpty() || teacherTitle.isEmpty()) {
 				txtAreaTeacher.setText("Please make sure all required fields have been filled in");
 				return;
@@ -770,7 +739,7 @@ public class SampleController {
 				return;
 			}
 
-			Teacher teacher = new Teacher(iD, teacherName, teacherLastname, teacherTitle, teacherAddress, salary);
+			Teacher teacher = new Teacher(iD, teacherName, teacherLastName, teacherTitle, teacherAddress, salary);
 
 
 // Add the teacher to the teacherReg
@@ -779,7 +748,7 @@ public class SampleController {
 		teachers.add(teacherID);
 
 // Print a success message
-		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
+		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastName
 				+ "\n" + "Employee ID: " + iD + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
 				+ "\n" + "Title: " + teacherTitle);
 		txtTeacherName.clear();
@@ -823,12 +792,6 @@ public class SampleController {
 				teacherReg.removeTeacher(iD);
 				txtAreaTeacher.setText("The teacher with ID(" + teacherID + ") was deleted");
 
-				txtTeacherName.clear();
-				txtTeacherLastName.clear();
-				txtTeacherAddress.clear();
-				txtTeacherEmployeeID.clear();
-				txtTeacherHourlySalary.clear();
-				
 			}
 
 		} else {
@@ -878,12 +841,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
-					
 				}
 				// Update LastName
 				if (t.getTeacherName().equals(teacherName) && t.getTeacherAddress().equals(teacherAddress)
@@ -900,12 +857,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Last Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
-					
 				}
 				// Update Address
 				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
@@ -922,11 +873,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
 				}
 				// Updated Salary
 				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
@@ -951,11 +897,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Salary changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
 				}
 
 				// Update Title
@@ -973,11 +914,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Teacher Title changed for teacher with \n" + "EmployeeId (" + iD + ")");
 
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
 				}
 
 				if (!t.getTeacherLastName().equals(teacherLastName) && !t.getTeacherName().equals(teacherName)
@@ -1003,11 +939,6 @@ public class SampleController {
 
 					txtAreaTeacher.setText("Name, Last Name, Address, Salary and Title was changed for\n"
 							+ "Teacher with Employee ID(" + iD + ")");
-					txtTeacherName.clear();
-					txtTeacherLastName.clear();
-					txtTeacherAddress.clear();
-					txtTeacherEmployeeID.clear();
-					txtTeacherHourlySalary.clear();
 				}
 
 				// If everything is the same, no change will be made
@@ -1040,17 +971,19 @@ public class SampleController {
 		Course course = courseReg.findCourse((coursecode));
 		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
 		
+		//checks if selected course already exists in teachers responsible list
 		if (teacher.findCourseResponsible(coursecode) != null) {
 			txtAreaResponsibility.setText("Teacher with ID: " + teacherId + ", \n is already responsible for this course");
 			return;
 		}
 		
+		//if a teacher and course have been selected, add the course to the teachers responsible list
 		if (teacherId != null || coursecode != null) {
 			teacher.addCourseResponsible(course);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", has been assigned \n responsibility for"
 					+ " course with course code: " + coursecode);
 		
-		
+	//if a teacher or course have not been selected	
 	}else { txtAreaResponsibility.setText("Please make sure you have selected a teacher and a course");
 	
 	
@@ -1061,20 +994,21 @@ public class SampleController {
 	
 	public void btnResponsibilityRemove(ActionEvent event) {
 		String teacherId = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
-		String courseCode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
-		//Course course = courseReg.findCourse((courseCode));
+		String coursecode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
+		Course course = courseReg.findCourse((coursecode));
 		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
 		
-		if (teacher.findCourseResponsible(courseCode) == null) {
+		//check if the course exists in the teachers responsible list
+		if (teacher.findCourseResponsible(coursecode) == null) {
 			txtAreaResponsibility.setText("Teacher with ID: " + teacherId + ", \n is not responsible for this course");
 			return;
 		}
-		
-		if (teacherId != null || courseCode != null) {
-			teacher.removeCourseResponsible(courseCode);
+		//if course and teacher have been selected, remove the course from the teachers responsible list
+		if (teacherId != null || coursecode != null) {
+			teacher.removeCourseResponsible(course);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
-					+ " course with course code: " + courseCode);
-			return;
+					+ " course with course code: " + coursecode);
+			
 			
 		}else { txtAreaResponsibility.setText("Please make sure you have selected a teacher and a course");
 			
@@ -1082,8 +1016,58 @@ public class SampleController {
 		
 	}
 	
+	public void btnTeachingAddTeacher(ActionEvent event) {
+		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String hours = txtTeachingHours.getText();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
+	
+		//check if the course already exists in chosen teachers teaching list
+		if(teacher.findCourseTeaching(coursecode) != null) {
+			txtAreaTeaching.setText("Teacher with ID: " + teacherId + ", \n is already teaching this course");
+			return;
+		}
+		//check if selected course already has a teacher - a course can only be taught by one teacher	
+		if (course.getTeacher() != null) {
+				txtAreaTeaching.setText("The selected course already has a teacher, please choose another course");
+				return;		
+		}
+	//if a teacher and course have not been selected, or amount of hours have not been filled in
+	if (teacherId == null || coursecode == null || hours.isEmpty()) {
+		txtAreaTeaching.setText("Please fill in all required fields");
+		
+		//if all fields have been filled in, selected course gets added to selected teachers teaching list
+		//and teacher gets added as teacher for selected course
+	}else {
+		teacher.addCourseTeaching(course);
+		course.setTeacher(teacher);
+		txtAreaTeaching.setText("Teacher with employee ID: " + teacherId + ", \n"
+				+ " has been assigned course with course code: " + coursecode +"\n "
+						+ "Hours: " + hours);	
+}
 
+
+	} 
+	public void btnTeachingUpdate(ActionEvent event) {
+		
+	
+		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String updatedHours = txtTeachingHours.getText(); 
+		
+		
+		if (teacherId == null || coursecode == null || updatedHours.isEmpty()) {
+			txtAreaTeaching.setText("Please fill in all required fields");
+			
+		}else {
+			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n"
+					+ "on course (" + coursecode + "), has been updated to: " + updatedHours);
+		}			
+			
 	}
+	}
+
 
 
 

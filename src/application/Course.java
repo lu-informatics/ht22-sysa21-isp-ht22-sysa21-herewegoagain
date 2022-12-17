@@ -7,7 +7,8 @@ public class Course {
 	private String courseName;
 	private int courseCredit;
 	private String courseCycle;
-	private Teacher teachers;
+	private Teacher teacher;
+
 
 	// Constructor
 	public Course(String courseCode, String courseName, int courseCredit, String courseCycle) {
@@ -49,5 +50,13 @@ public class Course {
 	public void setCourseCycle(String courseCycle) {
 		this.courseCycle = courseCycle;
 	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
 
-}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+		
+	}
+
