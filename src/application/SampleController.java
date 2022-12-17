@@ -100,7 +100,7 @@ public class SampleController {
 	private ComboBox<String> comboBoxTeachingTeacher;
 
 	@FXML
-	private TableView<?> tableViewResponsibility;
+	private TableView<String> tableViewResponsibility;
 
 	@FXML
 	private TableView<?> tableViewTeaching;
@@ -320,6 +320,7 @@ public class SampleController {
 		// Course Responsibility //Lista över Teacher och Courses behövs
 		comboBoxResponsibilityCourse.setItems(courses);
 		comboBoxResponsibilityTeacher.setItems(teachers);
+
 		
 		// Teaching //Lista över Teacher och Courses behövs
 		comboBoxTeachingTeacher.setItems(teachers);
@@ -995,6 +996,7 @@ public class SampleController {
 		Course course = courseReg.findCourse((coursecode));
 		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
 		
+		
 		if (teacher.findCourseResponsible(coursecode) == null) {
 			txtAreaResponsibility.setText("Teacher with ID: " + teacherId + ", \n is not responsible for this course");
 			return;
@@ -1011,7 +1013,57 @@ public class SampleController {
 		}
 		
 	}
+	
+	public void btnTeachingAddTeacher(ActionEvent event) {
+		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String hours = txtTeachingHours.getText();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(Integer.parseInt(teacherId));
+	
+		
+		if(teacher.findCourseTeaching(coursecode) != null) {
+			txtAreaTeaching.setText("Teacher with ID: " + teacherId + ", \n is already teaching this course");
+			return;
+		}
+			
+		if (course.getTeacher() != null) {
+				txtAreaTeaching.setText("The selected course already has a teacher, please choose another course");
+				return;		
+		}
+	
+	if (teacherId == null || coursecode == null || hours.isEmpty()) {
+		txtAreaTeaching.setText("Please fill in all required fields");
+		
+	}else {
+		teacher.addCourseTeaching(course);
+		course.setTeacher(teacher);
+		txtAreaTeaching.setText("Teacher with employee ID: " + teacherId + ", \n"
+				+ " has been assigned course with course code: " + coursecode +"\n "
+						+ "Hours: " + hours);	
+}
+
+
+	} 
+	public void btnTeachingUpdate(ActionEvent event) {
+		
+	
+		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String updatedHours = txtTeachingHours.getText(); 
+		
+		
+		if (teacherId == null || coursecode == null || updatedHours.isEmpty()) {
+			txtAreaTeaching.setText("Please fill in all required fields");
+			
+		}else {
+			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n"
+					+ "on course (" + coursecode + "), has been updated to: " + updatedHours);
+		}			
+			
 	}
+	}
+
 
 
 
