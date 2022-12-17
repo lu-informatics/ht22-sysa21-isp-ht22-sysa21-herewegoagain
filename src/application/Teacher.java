@@ -21,6 +21,7 @@ public class Teacher {
 			String teacherAddress, double hourlySalary) {
 		this.employeeID = employeeID;
 		this.teacherName = teacherName;
+		this.teacherLastName = teacherLastName;
 		this.teacherTitle = teacherTitle;
 		this.teacherAddress = teacherAddress;
 		this.hourlySalary = hourlySalary;
