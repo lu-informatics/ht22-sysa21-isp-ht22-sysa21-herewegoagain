@@ -320,8 +320,11 @@ public class SampleController {
 		// Course Responsibility //Lista över Teacher och Courses behövs
 		comboBoxResponsibilityCourse.setItems(courses);
 		comboBoxResponsibilityTeacher.setItems(teachers);
-		comboBoxTeachingCourse.setItems(courses);
+
+		
+		// Teaching //Lista över Teacher och Courses behövs
 		comboBoxTeachingTeacher.setItems(teachers);
+		comboBoxTeachingCourse.setItems(courses);
 
 		// Populating Teacher Title Combobox
 		comboBoxTeacherTitle.getItems().addAll("Lecturer", "Assistant Professor", "Associate Professor", "Professor");
@@ -543,6 +546,10 @@ public class SampleController {
 		// Print a success message
 		txtAreaDepartment.setText("A new Department was created: " + "\n" + "Name: " + departmentName + "\n"
 				+ "Address:  " + departmentAddress + "\n" + "Budget:" + departmentBudget);
+		txtDepartmentName.clear();
+		txtDepartmentAddress.clear();
+		txtDepartmentBudget.clear();
+
 	}
 
 	// update
@@ -690,14 +697,14 @@ public class SampleController {
 	public void btnTeacherCreate(ActionEvent event) {
 
 		String teacherName = txtTeacherName.getText();
-		String teacherLastname = txtTeacherLastName.getText();
+		String teacherLastName = txtTeacherLastName.getText();
 		String teacherAddress = txtTeacherAddress.getText();
 		String teacherID = txtTeacherEmployeeID.getText();
 		String teacherSalary = txtTeacherHourlySalary.getText();
 		String teacherTitle = comboBoxTeacherTitle.getValue();
 
 		try {
-			if (teacherName.isEmpty() || teacherLastname.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
+			if (teacherName.isEmpty() || teacherLastName.isEmpty() || teacherAddress.isEmpty() || teacherID.isEmpty()
 					|| teacherSalary.isEmpty() || teacherTitle.isEmpty()) {
 				txtAreaTeacher.setText("Please make sure all required fields have been filled in");
 				return;
@@ -732,7 +739,7 @@ public class SampleController {
 				return;
 			}
 
-			Teacher teacher = new Teacher(iD, teacherName, teacherLastname, teacherTitle, teacherAddress, salary);
+			Teacher teacher = new Teacher(iD, teacherName, teacherLastName, teacherTitle, teacherAddress, salary);
 
 
 // Add the teacher to the teacherReg
@@ -741,7 +748,7 @@ public class SampleController {
 		teachers.add(teacherID);
 
 // Print a success message
-		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
+		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastName
 				+ "\n" + "Employee ID: " + iD + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
 				+ "\n" + "Title: " + teacherTitle);
 		txtTeacherName.clear();
