@@ -735,15 +735,15 @@ public class SampleController {
 
 // Add the teacher to the teacherReg
 		teacherReg.addTeacher(teacher);
-		teacherList.add(teacherReg.findTeacher(ID));
+		teacherList.add(teacherReg.findTeacher(iD));
 		teachers.add(teacherID);
 
 // Print a success message
 		txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastname
-				+ "\n" + "Employee ID: " + ID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
+				+ "\n" + "Employee ID: " + iD + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:" + salary
 				+ "\n" + "Title: " + teacherTitle);
 		txtTeacherName.clear();
-		txtTeacherLastname.clear();
+		txtTeacherLastName.clear();
 		txtTeacherAddress.clear();
 		txtTeacherEmployeeID.clear();
 		txtTeacherHourlySalary.clear();
