@@ -109,9 +109,22 @@ public class Teacher {
 				return course;
 		}
 		return null;
+		
 
 	}
 	public void removeCourseResponsible(Course course) {
 		getResponsible().remove(course.getCourseCode());
 	}
+	
+	public  void addCourseTeaching(Course course) {
+		this.teaching.add(course);
+	}
+	
+	public Course findCourseTeaching(String courseCode) {
+		for (Course course : this.getTeaching()) {
+			if (courseCode == course.getCourseCode())
+				return course;
+		}
+		return null;
+}
 }
