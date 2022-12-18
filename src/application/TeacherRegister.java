@@ -14,7 +14,7 @@ public class TeacherRegister {
 		this.teacherReg = teacherReg;
 	}
 
-	public Teacher findTeacher(int employeeId) {
+	public Teacher findTeacher(String employeeId) {
 		for (Teacher teacher : teacherReg) {
 			if (teacher.getEmployeeID() == (employeeId)) {
 				return teacher;
@@ -29,7 +29,7 @@ public class TeacherRegister {
 		}
 	}
 
-	public Teacher removeTeacher(int employeeId) {
+	public Teacher removeTeacher(String employeeId) {
 		Teacher teacher = findTeacher(employeeId);
 		if (teacher != null) {
 			teacherReg.remove(teacher);
