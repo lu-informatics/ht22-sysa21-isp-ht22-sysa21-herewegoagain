@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Teacher {
 
-	private int employeeID;
+	private String employeeID;
 	private String teacherName;
 	private String teacherLastName;
 	private String teacherAddress;
@@ -17,7 +17,7 @@ public class Teacher {
 	private ArrayList<Course> responsible = new ArrayList<>();
 
 	// Constructor
-	public Teacher(int employeeID, String teacherName, String teacherLastName, String teacherTitle,
+	public Teacher(String employeeID, String teacherName, String teacherLastName, String teacherTitle,
 			String teacherAddress, double hourlySalary) {
 		this.employeeID = employeeID;
 		this.teacherName = teacherName;
@@ -32,11 +32,11 @@ public class Teacher {
 		return department;
 	}
 
-	public int getEmployeeID() {
+	public String getEmployeeID() {
 		return employeeID;
 	}
 
-	public void setEmployeeID(int employeeID) {
+	public void setEmployeeID(String employeeID) {
 		this.employeeID = employeeID;
 	}
 
