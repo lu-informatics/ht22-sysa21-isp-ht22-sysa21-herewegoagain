@@ -1,40 +1,24 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.stream.IntStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import application.Course;
 import application.Department;
 import application.Teacher;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class SampleController {
 
@@ -219,7 +203,7 @@ public class SampleController {
 	private TableView<Teacher> tableViewTeacher;
 
 	@FXML
-	private TableColumn<Teacher, Integer> columnEmployeeID = new TableColumn<>("Key");;
+	private TableColumn<Teacher, String> columnEmployeeID = new TableColumn<>("Key");;
 
 	@FXML
 	private TableColumn<Teacher, String> columnTeacherName = new TableColumn<>("Value");;
@@ -289,7 +273,7 @@ public class SampleController {
 
 		// TableColumn Teacher
 
-		columnEmployeeID.setCellValueFactory(new PropertyValueFactory<Teacher, Integer>("employeeID"));
+		columnEmployeeID.setCellValueFactory(new PropertyValueFactory<Teacher, String>("employeeID"));
 		columnTeacherName.setCellValueFactory(new PropertyValueFactory<Teacher, String>("teacherName"));
 		columnTeacherLastName.setCellValueFactory(new PropertyValueFactory<Teacher, String>("teacherLastName"));
 		columnTeacherAddress.setCellValueFactory(new PropertyValueFactory<Teacher, String>("teacherAddress"));
@@ -341,11 +325,10 @@ public class SampleController {
 	}
 
 // Generate Course Code
-public void btnGenerateCourseCode(ActionEvent event) {
-	
-}
-	
-	
+	public void btnGenerateCourseCode(ActionEvent event) {
+
+	}
+
 // Create Course
 
 	public void btnCourseCreate(ActionEvent event) {
@@ -709,14 +692,22 @@ public void btnGenerateCourseCode(ActionEvent event) {
 
 	public void btnGenerateEmployeeID(ActionEvent event) {
 
-		String id = String.format("%04d", randomID.nextInt(10000));
-		String teacherName = txtTeacherName.getText().substring(0, 2);
-		String teacherLastName = txtTeacherLastName.getText().substring(0, 2);
-		String randomID = teacherName + id + teacherLastName;
-		txtTeacherEmployeeID.setText(randomID.toLowerCase()); 
+		String teacherName = txtTeacherName.getText();
+		String teacherLastName = txtTeacherLastName.getText();
+
 		
-		//Error hantering kvar 
+		if (txtTeacherName.getText().isEmpty() || txtTeacherLastName.getText().isEmpty()) {
+			// Print an error message if any of the values are empty
+			txtAreaTeacher
+					.setText("Error: Please make sure Name and Last Name \nis filled in before generating an ID.");
+
+		} else {
+			String id = String.format("%04d", randomID.nextInt(10000));
+			String randomID = teacherName.substring(0, 2) + id + teacherLastName.substring(0, 2);
+			txtTeacherEmployeeID.setText(randomID.toLowerCase());
+		}
 	}
+	
 
 	// Teacher
 
@@ -751,21 +742,21 @@ public void btnGenerateCourseCode(ActionEvent event) {
 				return;
 			}
 
-		/*	int iD;
-			try {
-				iD = Integer.parseInt(teacherID);
-			} catch (NumberFormatException e) {
-				txtAreaTeacher.setText("Teacher ID must be written in numbers");
-				return; 
-
-			} */ // Kommer inte behövs efter Generate knappen är klar
+			/*
+			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
+			 * (NumberFormatException e) {
+			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
+			 * 
+			 * }
+			 */ // Kommer inte behövs efter Generate knappen är klar
 
 			if (salary < 0) {
 				txtAreaTeacher.setText("Salary cannot be negative value");
 				return;
 			}
 
-			Teacher teacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress, salary);
+			Teacher teacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
+					salary);
 
 // Add the teacher to the teacherReg
 			teacherReg.addTeacher(teacher);
@@ -774,8 +765,8 @@ public void btnGenerateCourseCode(ActionEvent event) {
 
 // Print a success message
 			txtAreaTeacher.setText("A new teacher was created: " + "\n" + "Name: " + teacherName + " " + teacherLastName
-					+ "\n" + "Employee ID: " + teacherID + "\n" + "Address:  " + teacherAddress + "\n" + "Hourly salary:"
-					+ salary + "\n" + "Title: " + teacherTitle);
+					+ "\n" + "Employee ID: " + teacherID + "\n" + "Address:  " + teacherAddress + "\n"
+					+ "Hourly salary:" + salary + "\n" + "Title: " + teacherTitle);
 			txtTeacherName.clear();
 			txtTeacherLastName.clear();
 			txtTeacherAddress.clear();
@@ -837,14 +828,13 @@ public void btnGenerateCourseCode(ActionEvent event) {
 				return;
 			}
 
-			/* int iD;
-			try {
-				iD = Integer.parseInt(teacherID);
-			} catch (NumberFormatException e) {
-				txtAreaTeacher.setText("Teacher ID must be written in numbers");
-				return;
-
-			} */ // Behövs inte med Generate metoden
+			/*
+			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
+			 * (NumberFormatException e) {
+			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
+			 * 
+			 * }
+			 */ // Behövs inte med Generate metoden
 
 			Teacher t = teacherReg.findTeacher(teacherID);
 			// Check if the TeacherID exists.
@@ -854,15 +844,16 @@ public void btnGenerateCourseCode(ActionEvent event) {
 				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherAddress().equals(teacherAddress)
 						&& t.getTeacherTitle().equals(teacherTitle)) {
 
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							Double.parseDouble(teacherSalary));
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, Double.parseDouble(teacherSalary));
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
 					teacherReg.addTeacher(updatedTeacher);
 					teacherList.add(updatedTeacher);
 
-					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
+					txtAreaTeacher
+							.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
 
 				}
 				// Update LastName
@@ -870,15 +861,16 @@ public void btnGenerateCourseCode(ActionEvent event) {
 						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)
 						&& t.getTeacherTitle().equals(teacherTitle)) {
 
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							Double.parseDouble(teacherSalary));
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, Double.parseDouble(teacherSalary));
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
 					teacherReg.addTeacher(updatedTeacher);
 					teacherList.add(updatedTeacher);
 
-					txtAreaTeacher.setText("Teacher Last Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
+					txtAreaTeacher.setText(
+							"Teacher Last Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
 
 				}
 				// Update Address
@@ -886,15 +878,16 @@ public void btnGenerateCourseCode(ActionEvent event) {
 						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)
 						&& t.getTeacherTitle().equals(teacherTitle)) {
 
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							Double.parseDouble(teacherSalary));
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, Double.parseDouble(teacherSalary));
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
 					teacherReg.addTeacher(updatedTeacher);
 					teacherList.add(updatedTeacher);
 
-					txtAreaTeacher.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
+					txtAreaTeacher
+							.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
 
 				}
 				// Updated Salary
@@ -910,15 +903,16 @@ public void btnGenerateCourseCode(ActionEvent event) {
 						return;
 					}
 
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							salary);
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, salary);
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
 					teacherReg.addTeacher(updatedTeacher);
 					teacherList.add(updatedTeacher);
 
-					txtAreaTeacher.setText("Teacher Salary changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
+					txtAreaTeacher
+							.setText("Teacher Salary changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
 
 				}
 
@@ -927,15 +921,16 @@ public void btnGenerateCourseCode(ActionEvent event) {
 						&& t.getTeacherAddress().equals(teacherAddress)
 						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)) {
 
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							Double.parseDouble(teacherSalary));
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, Double.parseDouble(teacherSalary));
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
 					teacherReg.addTeacher(updatedTeacher);
 					teacherList.add(updatedTeacher);
 
-					txtAreaTeacher.setText("Teacher Title changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
+					txtAreaTeacher
+							.setText("Teacher Title changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
 
 				}
 
@@ -952,8 +947,8 @@ public void btnGenerateCourseCode(ActionEvent event) {
 						txtAreaTeacher.setText("Salary cannot be negative value");
 						return;
 					}
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle, teacherAddress,
-							Double.parseDouble(teacherSalary));
+					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+							teacherAddress, Double.parseDouble(teacherSalary));
 
 					teacherList.remove(teacherID);
 					teacherReg.removeTeacher(teacherID);
