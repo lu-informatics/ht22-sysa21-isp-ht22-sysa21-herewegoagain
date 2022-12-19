@@ -14,9 +14,9 @@ public class TeacherRegister {
 		this.teacherReg = teacherReg;
 	}
 
-	public Teacher findTeacher(String employeeId) {
+	public Teacher findTeacher(String employeeID) {
 		for (Teacher teacher : teacherReg) {
-			if (teacher.getEmployeeID() == (employeeId)) {
+			if (teacher.getEmployeeID() == (employeeID)) {
 				return teacher;
 			}
 		}

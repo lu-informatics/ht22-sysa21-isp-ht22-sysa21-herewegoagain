@@ -87,7 +87,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btnGenerateCourseCode" layoutX="199.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnGenerateCourseCode" text="Generate" />
-                        <TextField fx:id="txtCourseCode" editable="false" layoutX="28.0" layoutY="21.0" promptText="Course Code" />
+                        <TextField fx:id="txtCourseCode" layoutX="28.0" layoutY="21.0" promptText="Course Code" />
                         <TextField fx:id="txtCourseName" layoutX="29.0" layoutY="57.0" promptText="Course Name" />
                         <TextField fx:id="txtCourseCredit" layoutX="28.0" layoutY="93.0" promptText="Course Credit" />
                         <ComboBox fx:id="comboBoxCourseCycle" layoutX="34.0" layoutY="136.0" prefWidth="150.0" promptText="Cycle" />
