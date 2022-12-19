@@ -352,9 +352,8 @@ public class SampleController {
 			return;
 		}
 
-		Course c = courseReg.findCourse(courseCode);
 		// Check if the courseCode is already in the coureList HashMap
-		if (c != null) {
+		if (courseReg.findCourse(courseCode) != null) {
 			txtAreaCourse.setText(
 					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
 			return;
@@ -517,9 +516,8 @@ public class SampleController {
 			return;
 		}
 
-		Department d = depReg.findDepartment(departmentName);
 		// Check if the departmentName is already in the departmentNameList HashMap
-		if (d != null) {
+		if (depReg.findDepartment(departmentName) != null) {
 			txtAreaDepartment.setText(
 					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
 			return;
@@ -695,19 +693,17 @@ public class SampleController {
 		String teacherName = txtTeacherName.getText();
 		String teacherLastName = txtTeacherLastName.getText();
 
-		
 		if (txtTeacherName.getText().isEmpty() || txtTeacherLastName.getText().isEmpty()) {
 			// Print an error message if any of the values are empty
 			txtAreaTeacher
-					.setText("Error: Please make sure Name and Last Name \nis filled in before generating an ID.");
+					.setText("Error: Please make sure Name and Last Name \nare filled in before generating an ID.");
 
 		} else {
 			String id = String.format("%04d", randomID.nextInt(10000));
-			String randomID = teacherName.substring(0, 2) + id + teacherLastName.substring(0, 2);
-			txtTeacherEmployeeID.setText(randomID.toLowerCase());
+			String teacherID = teacherName.substring(0, 2) + id + teacherLastName.substring(0, 2);
+			txtTeacherEmployeeID.setText(teacherID.toLowerCase());
 		}
 	}
-	
 
 	// Teacher
 
@@ -736,8 +732,8 @@ public class SampleController {
 				return;
 			}
 
-			Teacher t = teacherReg.findTeacher(teacherID);
-			if (t != null) {
+
+			if (teacherReg.findTeacher(teacherID) != null) {
 				txtAreaTeacher.setText("A teacher with id: " + teacherID + " already exist");
 				return;
 			}
@@ -788,14 +784,14 @@ public class SampleController {
 		// ComboBox later
 		if (!teacherID.isEmpty()) {
 
-			int iD;
+			/* int iD;
 			try {
 				iD = Integer.parseInt(teacherID);
 			} catch (NumberFormatException e) {
 				txtAreaTeacher.setText("Teacher ID must be written in numbers");
 				return;
 
-			}
+			} */
 
 			Teacher t = teacherReg.findTeacher(teacherID);
 			if (t == null) {
