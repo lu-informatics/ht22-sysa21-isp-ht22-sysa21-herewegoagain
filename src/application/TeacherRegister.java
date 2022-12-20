@@ -16,7 +16,7 @@ public class TeacherRegister {
 
 	public Teacher findTeacher(String employeeID) {
 		for (Teacher teacher : teacherReg) {
-			if (teacher.getEmployeeID() == (employeeID)) {
+			if (teacher.getEmployeeID().equals(employeeID)) {
 				return teacher;
 			}
 		}

@@ -340,7 +340,7 @@ public class SampleController {
 		if (txtCourseCode.getText().isEmpty() || txtCourseName.getText().isEmpty()
 				|| txtCourseCredit.getText().isEmpty()) {
 			// Print an error message if any of the values are empty
-			txtAreaCourse.setText("Error: course code, name, credits and cycle \nmust not be empty ");
+			txtAreaCourse.setText("Error: Course code, name, credits and cycle \nmust not be empty ");
 			return;
 		}
 		// Parse the credit as an int
@@ -355,7 +355,7 @@ public class SampleController {
 		// Check if the courseCode is already in the coureList HashMap
 		if (courseReg.findCourse(courseCode) != null) {
 			txtAreaCourse.setText(
-					"Error: A department with that name already exists.\nPlease make sure to use another Department Name");
+					"Error: A coures with that name already exists.\nPlease make sure to use another Course Code");
 			return;
 		}
 
