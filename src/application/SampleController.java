@@ -732,7 +732,6 @@ public class SampleController {
 				return;
 			}
 
-
 			if (teacherReg.findTeacher(teacherID) != null) {
 				txtAreaTeacher.setText("A teacher with id: " + teacherID + " already exist");
 				return;
@@ -784,14 +783,13 @@ public class SampleController {
 		// ComboBox later
 		if (!teacherID.isEmpty()) {
 
-			/* int iD;
-			try {
-				iD = Integer.parseInt(teacherID);
-			} catch (NumberFormatException e) {
-				txtAreaTeacher.setText("Teacher ID must be written in numbers");
-				return;
-
-			} */
+			/*
+			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
+			 * (NumberFormatException e) {
+			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
+			 * 
+			 * }
+			 */
 
 			Teacher t = teacherReg.findTeacher(teacherID);
 			if (t == null) {
@@ -812,167 +810,59 @@ public class SampleController {
 
 	// Teacher update
 	public void teacherUpdate(ActionEvent event) {
-		String teacherName = txtTeacherName.getText();
-		String teacherLastName = txtTeacherLastName.getText();
-		String teacherAddress = txtTeacherAddress.getText();
-		String teacherID = txtTeacherEmployeeID.getText();
-		String teacherSalary = txtTeacherHourlySalary.getText();
-		String teacherTitle = (String) comboBoxTeacherTitle.getValue();
 		try {
+			String teacherName = txtTeacherName.getText();
+			String teacherLastName = txtTeacherLastName.getText();
+			String teacherAddress = txtTeacherAddress.getText();
+			String teacherID = txtTeacherEmployeeID.getText();
+			double teacherSalary = Double.parseDouble(txtTeacherHourlySalary.getText());
+			String teacherTitle = (String) comboBoxTeacherTitle.getValue();
+
 			if (teacherID.isEmpty()) {
 				txtAreaTeacher.setText("Please make sure to fill in a Teacher ID \nto be able to update");
 				return;
 			}
 
-			/*
-			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
-			 * (NumberFormatException e) {
-			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
-			 * 
-			 * }
-			 */ // Behövs inte med Generate metoden
-
 			Teacher t = teacherReg.findTeacher(teacherID);
 			// Check if the TeacherID exists.
 			if (t != null) {
-				// If all these are the same as an existing teacher
-				// change TeacherName
-				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherAddress().equals(teacherAddress)
-						&& t.getTeacherTitle().equals(teacherTitle)) {
-
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, Double.parseDouble(teacherSalary));
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher
-							.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
-
+				
+				 if (t.getTeacherName().equals(teacherName) && t.getTeacherLastName().equals(teacherLastName)
+		                    && t.getTeacherAddress().equals(teacherAddress) && t.getHourlySalary() == teacherSalary
+		                    && t.getTeacherTitle().equals(teacherTitle)) {
+		                txtAreaTeacher.setText("You have to change a value to update the teacher \nwith EmployeeId (" + teacherID + ")");
+		                return;
+		            }
+				
+				// Create a new Teacher object with the updated fields
+				Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
+						teacherAddress, teacherSalary);
+				// Update the fields of the existing Teacher object if they have changed
+				if (!t.getTeacherName().equals(teacherName)) {
+					t.setTeacherName(teacherName);
+					txtAreaTeacher.setText("Teacher Name for EmployeeId (" + teacherID + ") was updated");
+				return;}
+				if (!t.getTeacherLastName().equals(teacherLastName)) {
+					t.setTeacherLastName(teacherLastName);
+					
 				}
-				// Update LastName
-				if (t.getTeacherName().equals(teacherName) && t.getTeacherAddress().equals(teacherAddress)
-						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)
-						&& t.getTeacherTitle().equals(teacherTitle)) {
-
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, Double.parseDouble(teacherSalary));
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher.setText(
-							"Teacher Last Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
-
+				if (!t.getTeacherAddress().equals(teacherAddress)) {
+					t.setTeacherAddress(teacherAddress);
 				}
-				// Update Address
-				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
-						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)
-						&& t.getTeacherTitle().equals(teacherTitle)) {
-
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, Double.parseDouble(teacherSalary));
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher
-							.setText("Teacher Name changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
-
+				if (t.getHourlySalary() != teacherSalary) {
+					t.setHourlySalary(teacherSalary);
 				}
-				// Updated Salary
-				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
-						&& t.getTeacherAddress().equals(teacherAddress) && t.getTeacherTitle().equals(teacherTitle)) {
-
-					double salary;
-					salary = Double.parseDouble(teacherSalary);
-					txtAreaTeacher.setText("Teacher salary must be written in numbers");
-
-					if (salary < 0) {
-						txtAreaTeacher.setText("Salary cannot be negative value");
-						return;
-					}
-
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, salary);
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher
-							.setText("Teacher Salary changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
-
+				if (!t.getTeacherTitle().equals(teacherTitle)) {
+					t.setTeacherTitle(teacherTitle);
 				}
 
-				// Update Title
-				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
-						&& t.getTeacherAddress().equals(teacherAddress)
-						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)) {
-
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, Double.parseDouble(teacherSalary));
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher
-							.setText("Teacher Title changed for teacher with \n" + "EmployeeId (" + teacherID + ")");
-
-				}
-
-				if (!t.getTeacherLastName().equals(teacherLastName) && !t.getTeacherName().equals(teacherName)
-						&& !t.getTeacherAddress().equals(teacherAddress)
-						&& t.getHourlySalary() != Integer.parseInt(teacherSalary)
-						&& !t.getTeacherTitle().equals(teacherTitle)) {
-
-					double salary;
-					salary = Double.parseDouble(teacherSalary);
-					txtAreaTeacher.setText("Teacher salary must be written in numbers");
-
-					if (salary < 0) {
-						txtAreaTeacher.setText("Salary cannot be negative value");
-						return;
-					}
-					Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-							teacherAddress, Double.parseDouble(teacherSalary));
-
-					teacherList.remove(teacherID);
-					teacherReg.removeTeacher(teacherID);
-					teacherReg.addTeacher(updatedTeacher);
-					teacherList.add(updatedTeacher);
-
-					txtAreaTeacher.setText("Name, Last Name, Address, Salary and Title was changed for\n"
-							+ "Teacher with Employee ID(" + teacherID + ")");
-				}
-
-				// If everything is the same, no change will be made
-				if (t.getTeacherLastName().equals(teacherLastName) && t.getTeacherName().equals(teacherName)
-						&& t.getTeacherAddress().equals(teacherAddress)
-						&& t.getHourlySalary() == Integer.parseInt(teacherSalary)
-						&& t.getTeacherTitle().equals(teacherTitle)) {
-
-					txtAreaTeacher.setText("You have to change something in order to Update the Teacher");
-				}
+				// Remove the old Teacher object from the collections and add the updated object
 
 			} else {
-				// If the TeacherID does not exist, print an error message
-				txtAreaTeacher.setText("Error: a teacher with that ID does not exist.");
+				txtAreaTeacher.setText("Teacher with EmployeeId (" + teacherID + ") not found");
 			}
-
 		} catch (NumberFormatException e) {
-			txtAreaTeacher.setText("Teacher Salary must be written in numbers");
-		} catch (NullPointerException np) {
-			txtAreaTeacher.setText("A value must not be left empty");
+			txtAreaTeacher.setText("Please make sure to enter a valid number for the salary field");
 		}
 	}
 
