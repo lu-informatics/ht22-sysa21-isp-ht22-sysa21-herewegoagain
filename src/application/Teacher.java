@@ -117,6 +117,7 @@ public class Teacher {
 		for (Course c : this.getResponsible()) {
 			if (c != null) {
 			getResponsible().remove(c);	
+			return c;
 			}
 	}
 		return null;

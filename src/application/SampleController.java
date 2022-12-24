@@ -999,6 +999,8 @@ public class SampleController {
 			teacher.removeCourseResponsible(course);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
 					+ " course with course code: " + coursecode);
+			
+			return;
 
 		} else {
 			txtAreaResponsibility.setText("Please make sure you have selected a teacher and a course");
