@@ -374,6 +374,13 @@ public class SampleController {
 
 		txtAreaCourse.setText("A new Course was created: " + "\n" + "Code: " + courseCode + "\n" + "Name:  "
 				+ courseName + "\n" + "Credit: " + courseCredit + "\n" + "Cycle: " + courseCycle);
+
+		txtCourseCode.clear();
+		txtCourseName.clear();
+		txtCourseCredit.clear();
+
+		return;
+
 	}
 
 	// Update Course
@@ -392,66 +399,81 @@ public class SampleController {
 			// Check if the courseCode exists
 			if (c != null) {
 
-				// Update courseName
-				if (c.getCourseCredit() == courseCredit && c.getCourseCycle().equals(courseCycle)) {
-
-					Course updatedCourse = new Course(courseCode, courseName, courseCredit, courseCycle);
-
-					courseList.remove(courseReg.findCourse(courseCode));
-					courseReg.removeCourse(courseCode);
-					courseReg.addCourse(updatedCourse);
-					courseList.add(updatedCourse);
-
-					txtAreaCourse.setText("Course Name was updated for (" + courseCode + ")");
-
-				}
-
-				// Update courseCredit
-				if (c.getCourseName().equals(courseName) && c.getCourseCycle().equals(courseCycle)) {
-
-					Course updatedCourse = new Course(courseCode, courseName, courseCredit, courseCycle);
-
-					courseList.remove(courseReg.findCourse(courseCode));
-					courseReg.removeCourse(courseCode);
-					courseReg.addCourse(updatedCourse);
-					courseList.add(updatedCourse);
-
-					txtAreaCourse.setText("Course Credit was updated for (" + courseCode + ")");
-				}
-
-				// Update courseCycle
-				if (c.getCourseName().equals(courseName) && c.getCourseCredit() == courseCredit) {
-
-					Course updatedCourse = new Course(courseCode, courseName, courseCredit, courseCycle);
-
-					courseList.remove(courseReg.findCourse(courseCode));
-					courseReg.removeCourse(courseCode);
-					courseReg.addCourse(updatedCourse);
-					courseList.add(updatedCourse);
-
-					txtAreaCourse.setText("Course Cycle was updated for (" + courseCode + ")");
-				}
-
-				// Update all
-				if (!c.getCourseName().equals(courseName) && c.getCourseCredit() != courseCredit
-						&& !c.getCourseCycle().equals(courseCycle)) {
-
-					Course updatedCourse = new Course(courseCode, courseName, courseCredit, courseCycle);
-
-					courseList.remove(courseReg.findCourse(courseCode));
-					courseReg.removeCourse(courseCode);
-					courseReg.addCourse(updatedCourse);
-					courseList.add(updatedCourse);
-
-					txtAreaCourse.setText("Course Name, Credit and Cycke was updated for (" + courseCode + ")");
-
-				}
-				// No Update
 				if (c.getCourseName().equals(courseName) && c.getCourseCredit() == courseCredit
 						&& c.getCourseCycle().equals(courseCycle)) {
 
 					txtAreaCourse.setText(
 							"You have to make a change on Course(" + courseCode + ") " + "\n in order to update");
+					return;
+				}
+
+				// Course updatedCourse = new Course(courseCode, courseName, courseCredit,
+				// courseCycle);
+
+				// Update all
+				if (!c.getCourseName().equals(courseName) && c.getCourseCredit() != courseCredit
+						&& !c.getCourseCycle().equals(courseCycle)) {
+
+					c.setCourseName(courseName);
+					c.setCourseCredit(courseCredit);
+					c.setCourseCycle(courseCycle);
+
+					int index = courseList.indexOf(c);
+					courseList.set(index, c);
+
+					txtAreaCourse.setText("Course Name, Credit and Cycle was updated for (" + courseCode + ")");
+
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
+					return;
+
+				}
+
+				// Update Course Name
+				if (!c.getCourseName().equals(courseName)) {
+					c.setCourseName(courseName);
+
+					int index = courseList.indexOf(c);
+					courseList.set(index, c);
+
+					txtAreaCourse.setText("Course Name was updated for (" + courseCode + ")");
+
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
+					return;
+				}
+
+				// Update Course Credit
+				if (c.getCourseCredit() != courseCredit) {
+					c.setCourseCredit(courseCredit);
+
+					int index = courseList.indexOf(c);
+					courseList.set(index, c);
+
+					txtAreaCourse.setText("Course Credit was updated for (" + courseCode + ")");
+
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
+					return;
+
+				}
+
+				// Update courseCredit
+				if (!c.getCourseCycle().equals(courseCycle)) {
+					c.setCourseCycle(courseCycle);
+
+					int index = courseList.indexOf(c);
+					courseList.set(index, c);
+
+					txtAreaCourse.setText("Course Cycle was updated for (" + courseCode + ")");
+
+					txtCourseCode.clear();
+					txtCourseName.clear();
+					txtCourseCredit.clear();
+					return;
 				}
 
 			} else {
@@ -544,116 +566,101 @@ public class SampleController {
 		txtDepartmentAddress.clear();
 		txtDepartmentBudget.clear();
 
+		return;
+
 	}
 
-	// update
-	// Gör metod if och else if //Switch för ifall man bara vill ändra budget,
-	// adress eller både och
+	// Update Department
+
 	public void btnDepartmentUpdate(ActionEvent event) {
 
-		String departmentName = txtDepartmentName.getText();
-		String departmentAddress = txtDepartmentAddress.getText();
-		String departmentBudget = txtDepartmentBudget.getText(); // ändra som i 156
 		try {
+			String departmentName = txtDepartmentName.getText();
+			String departmentAddress = txtDepartmentAddress.getText();
+			double departmentBudget = Double.parseDouble(txtDepartmentBudget.getText());
+
 			if (departmentName.isEmpty()) {
 				txtAreaDepartment.setText("Please make sure to fill in a Department Name \nto be able to update");
 
 				return;
-			} else {
+			}
+			Department d = depReg.findDepartment(departmentName);
+			// Check if the departmentName is already in the departmentNameList HashMap
+			if (d != null) {
 
-				Department d = depReg.findDepartment(departmentName);
-				// Check if the departmentName is already in the departmentNameList HashMap
-				if (d != null) {
+				if (departmentBudget < 0) {
+					txtAreaDepartment.setText("Budget cannot be negative value");
+					return;
+				}
+				// If address is not the same, set to the new address
+				if (!d.getDepartmentAddress().equals(departmentAddress)) {
+					d.setDepartmentAddress(departmentAddress);
 
-					// om adressen är densamma som den som har skrivits in
-					// ändra budget
-					if (d.getDepartmentAddress().equals(departmentAddress)) {
-// går nog att korta ner
-						double depBudget;
-						try {
-							depBudget = Double.parseDouble(departmentBudget);
-						} catch (NumberFormatException e) {
-							txtAreaDepartment.setText("Department Budget must be written in numbers");
-							return;
-						}
-						if (depBudget < 0) {
-							txtAreaDepartment.setText("Budget cannot be negative value");
-							return;
-						}
-						Department dep = new Department(departmentName, departmentAddress, depBudget);
+					int index = departmentList.indexOf(d);
+					departmentList.set(index, d);
 
-						departmentList.remove(depReg.findDepartment(departmentName));
-						depReg.removeDepartment(departmentName);
-						depReg.addDepartment(dep);
-						departmentList.add(dep);
+					txtAreaDepartment.setText("Updated Adress of Department (" + departmentName + ")");
+					txtDepartmentName.clear();
+					txtDepartmentAddress.clear();
+					txtDepartmentBudget.clear();
+					return;
+				}
 
-						txtAreaDepartment.setText("Updated Budget of Department (" + departmentName + ")");
+				// If the budget is not the same, set to the new budget
+				if (d.getBudget() != (departmentBudget)) {
+					d.setBudget(departmentBudget);
 
-					}
-					// if the budget is the same as in depReg, update departmentAddress
-					if (d.getBudget() == (Double.parseDouble(departmentBudget))) {
+					int index = departmentList.indexOf(d);
+					departmentList.set(index, d);
+					txtAreaDepartment.setText("Updated Budget of Department (" + departmentName + ")");
+					txtDepartmentName.clear();
+					txtDepartmentAddress.clear();
+					txtDepartmentBudget.clear();
 
-						Department dep = new Department(departmentName, departmentAddress,
-								Double.parseDouble(departmentBudget));
+					return;
 
-						departmentList.remove(depReg.findDepartment(departmentName));
-						depReg.removeDepartment(departmentName);
-						depReg.addDepartment(dep);
-						departmentList.add(dep);
+				}
+				// if none are the same, change both
+				if (d.getBudget() != departmentBudget && !d.getDepartmentAddress().equals(departmentAddress)) {
+					d.setBudget(departmentBudget);
+					d.setDepartmentAddress(departmentAddress);
 
-						txtAreaDepartment.setText("Updated Adress of Department (" + departmentName + ")");
+					int index = departmentList.indexOf(d);
+					departmentList.set(index, d);
 
-					}
-					// Om ingen är lik, ändra båda
-					if (d.getBudget() != (Double.parseDouble(departmentBudget))
-							&& !d.getDepartmentAddress().equals(departmentAddress)) {
-
-						double depBudget;
-						try {
-							depBudget = Double.parseDouble(departmentBudget);
-						} catch (NumberFormatException e) {
-							txtAreaDepartment.setText("Department Budget must be written in numbers");
-							return;
-						}
-						if (depBudget < 0) {
-							txtAreaDepartment.setText("Budget cannot be negative value");
-							return;
-						}
-
-						Department dep = new Department(departmentName, departmentAddress, depBudget);
-
-						departmentList.remove(depReg.findDepartment(departmentName));
-						depReg.removeDepartment(departmentName);
-						depReg.addDepartment(dep);
-						departmentList.add(dep);
-
-						txtAreaDepartment
-								.setText("Updated Address and Budget of \n" + "Department(" + departmentName + ")");
-
-					}
-
-					// Om båda är lika, ändra inget
-					if (d.getBudget() == (Double.parseDouble(departmentBudget))
-							&& d.getDepartmentAddress().equals(departmentAddress)) {
-
-						txtAreaDepartment.setText(
-								"You have to change either Department Address or Budget\n" + "in order to Update");
-
-					}
-
-				} else {
-
-					txtAreaDepartment.setText(
-							"Error: A department with that name does exists.\nPlease make sure to use another Department Name");
+					txtAreaDepartment
+							.setText("Updated Address and Budget of \n" + "Department(" + departmentName + ")");
+					txtDepartmentName.clear();
+					txtDepartmentAddress.clear();
+					txtDepartmentBudget.clear();
 					return;
 
 				}
 
+				// Om båda är lika, ändra inget
+				if (d.getBudget() == departmentBudget && d.getDepartmentAddress().equals(departmentAddress)) {
+
+					txtAreaDepartment.setText("You have to make a change in the Department \n" + "in order to Update");
+					return;
+
+				}
+
+			} else {
+
+				txtAreaDepartment.setText(
+						"Error: A department with that name does exists.\nPlease make sure to use another Department Name");
+				return;
+
 			}
 
-		} catch (NullPointerException np) {
-			txtAreaTeacher.setText("A value must not be left empty");
+		} catch (
+
+		NullPointerException np) {
+			txtAreaDepartment.setText("A value must not be left empty");
+		} catch (NumberFormatException nfe) {
+			txtAreaDepartment.setText("Make sure Budget is written in numbers");
 		}
+
 	}
 
 	// Overkill men den funkar
@@ -800,6 +807,12 @@ public class SampleController {
 				teacherReg.removeTeacher(teacherID);
 				txtAreaTeacher.setText("The teacher with ID(" + teacherID + ") was deleted");
 
+				txtTeacherName.clear();
+				txtTeacherLastName.clear();
+				txtTeacherAddress.clear();
+				txtTeacherEmployeeID.clear();
+				txtTeacherHourlySalary.clear();
+
 			}
 
 		} else {
@@ -819,50 +832,123 @@ public class SampleController {
 			String teacherTitle = (String) comboBoxTeacherTitle.getValue();
 
 			if (teacherID.isEmpty()) {
-				txtAreaTeacher.setText("Please make sure to fill in a Teacher ID \nto be able to update");
+				txtAreaTeacher.setText("Please make sure to fill in \na Teacher ID \nto be able to update");
 				return;
 			}
 
 			Teacher t = teacherReg.findTeacher(teacherID);
 			// Check if the TeacherID exists.
 			if (t != null) {
-				
-				 if (t.getTeacherName().equals(teacherName) && t.getTeacherLastName().equals(teacherLastName)
-		                    && t.getTeacherAddress().equals(teacherAddress) && t.getHourlySalary() == teacherSalary
-		                    && t.getTeacherTitle().equals(teacherTitle)) {
-		                txtAreaTeacher.setText("You have to change a value to update the teacher \nwith EmployeeId (" + teacherID + ")");
-		                return;
-		            }
-				
-				// Create a new Teacher object with the updated fields
-				Teacher updatedTeacher = new Teacher(teacherID, teacherName, teacherLastName, teacherTitle,
-						teacherAddress, teacherSalary);
+
+				if (t.getTeacherName().equals(teacherName) && t.getTeacherLastName().equals(teacherLastName)
+						&& t.getTeacherAddress().equals(teacherAddress) && t.getHourlySalary() == teacherSalary
+						&& t.getTeacherTitle().equals(teacherTitle)) {
+					txtAreaTeacher.setText(
+							"You have to change a value to update the teacher \nwith EmployeeId (" + teacherID + ")");
+					return;
+				}
+				// Change all at the same time
+				if (!t.getTeacherName().equals(teacherName) && !t.getTeacherLastName().equals(teacherLastName)
+						&& !t.getTeacherAddress().equals(teacherAddress) && t.getHourlySalary() != teacherSalary
+						&& !t.getTeacherTitle().equals(teacherTitle)) {
+					t.setTeacherName(teacherName);
+					t.setTeacherLastName(teacherLastName);
+					t.setTeacherAddress(teacherAddress);
+					t.setHourlySalary(teacherSalary);
+					t.setTeacherTitle(teacherTitle);
+
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+
+					txtAreaTeacher.setText("Name" + ", " + "LastName, " + "Address, "
+							+ "\nHourly Salary and Title was changed \nfor EmployeeId (" + teacherID + ")");
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+
+					return;
+
+				}
+
 				// Update the fields of the existing Teacher object if they have changed
 				if (!t.getTeacherName().equals(teacherName)) {
 					t.setTeacherName(teacherName);
-					txtAreaTeacher.setText("Teacher Name for EmployeeId (" + teacherID + ") was updated");
-				return;}
+
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+
+					txtAreaTeacher.setText("Teacher Name for \nEmployeeId (" + teacherID + ") was updated");
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					return;
+				}
 				if (!t.getTeacherLastName().equals(teacherLastName)) {
 					t.setTeacherLastName(teacherLastName);
-					
+
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+					txtAreaTeacher.setText("Teacher Last name for \nEmployeeId (" + teacherID + ") was updated");
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					return;
+
 				}
 				if (!t.getTeacherAddress().equals(teacherAddress)) {
 					t.setTeacherAddress(teacherAddress);
+
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+					txtAreaTeacher.setText("Teacher Address for \nEmployeeId (" + teacherID + ") was updated");
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					return;
 				}
 				if (t.getHourlySalary() != teacherSalary) {
 					t.setHourlySalary(teacherSalary);
+
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+					txtAreaTeacher.setText("Teacher Hourly Salary for \nEmployeeId (" + teacherID + ") was updated");
+
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+					return;
 				}
 				if (!t.getTeacherTitle().equals(teacherTitle)) {
 					t.setTeacherTitle(teacherTitle);
-				}
 
-				// Remove the old Teacher object from the collections and add the updated object
+					int index = teacherList.indexOf(t);
+					teacherList.set(index, t);
+					txtAreaTeacher.setText("Teacher Title for \nEmployeeId (" + teacherID + ") was updated");
+
+					txtTeacherName.clear();
+					txtTeacherLastName.clear();
+					txtTeacherAddress.clear();
+					txtTeacherEmployeeID.clear();
+					txtTeacherHourlySalary.clear();
+
+					return;
+				}
 
 			} else {
 				txtAreaTeacher.setText("Teacher with EmployeeId (" + teacherID + ") not found");
 			}
 		} catch (NumberFormatException e) {
-			txtAreaTeacher.setText("Please make sure to enter a valid number for the salary field");
+			txtAreaTeacher.setText("Please make sure to enter \na valid number for the salary field");
 		}
 	}
 
@@ -913,6 +999,8 @@ public class SampleController {
 			teacher.removeCourseResponsible(course);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
 					+ " course with course code: " + coursecode);
+			
+			return;
 
 		} else {
 			txtAreaResponsibility.setText("Please make sure you have selected a teacher and a course");
