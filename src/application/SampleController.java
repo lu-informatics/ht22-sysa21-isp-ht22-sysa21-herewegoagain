@@ -1073,14 +1073,18 @@ public class SampleController {
 		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
 		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
 		String updatedHours = txtTeachingHours.getText();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(teacherId);
 
 		if (teacherId == null || coursecode == null || updatedHours.isEmpty()) {
 			txtAreaTeaching.setText("Please fill in all required fields");
-
-		} else {
-			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n" + "on course ("
-					+ coursecode + "), has been updated to: " + updatedHours);
 		}
-
+		if (teacher.findCourseTeaching(coursecode) != null) {
+			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n" + "on course ("
+					+ coursecode + "), has been updated to: " + updatedHours);	
+			
+		} else {
+			txtAreaTeaching.setText("The selected teacher does not teach the selected course");
+		}
 	}
 }
