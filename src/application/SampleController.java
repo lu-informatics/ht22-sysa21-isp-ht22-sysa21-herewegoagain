@@ -327,7 +327,22 @@ public class SampleController {
 // Generate Course Code
 	public void btnGenerateCourseCode(ActionEvent event) {
 
+
+		String courseName = txtCourseName.getText();
+
+		if (courseName.isEmpty() ) {
+			// Print an error message if any of the values are empty
+			txtAreaCourse
+					.setText("Error: Please make sure the CourseName \nis filled in before generating a CourseCode.");
+			return;
+
+		} else {
+			String id = String.format("%04d", randomID.nextInt(10000));
+			String courseCode = courseName.substring(0, 2) + id;
+			txtCourseCode.setText(courseCode.toUpperCase());
+		}
 	}
+	
 
 // Create Course
 
@@ -505,6 +520,11 @@ public class SampleController {
 				courseReg.removeCourse(courseCode);
 				txtAreaCourse.setText("The course (" + courseCode + ") was deleted");
 
+				txtCourseCode.clear();
+				txtCourseName.clear();
+				txtCourseCredit.clear();
+				return;
+
 			}
 
 		} else {
@@ -681,6 +701,10 @@ public class SampleController {
 				departmentList.remove(depReg.findDepartment(departmentName));
 				depReg.removeDepartment(departmentName);
 				txtAreaDepartment.setText("The Department (" + departmentName + ") was deleted");
+
+				txtDepartmentName.clear();
+				txtDepartmentAddress.clear();
+				txtDepartmentBudget.clear();
 
 				return;
 			}
@@ -999,7 +1023,7 @@ public class SampleController {
 			teacher.removeCourseResponsible(course);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
 					+ " course with course code: " + coursecode);
-			
+
 			return;
 
 		} else {
