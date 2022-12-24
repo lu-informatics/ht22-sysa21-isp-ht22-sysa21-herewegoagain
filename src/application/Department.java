@@ -54,7 +54,7 @@ public class Department {
 	
 	//Find Teacher in Department 
 	
-	public Teacher findTeacher(int employeeID) {
+	public Teacher findTeacher(String employeeID) {
 		for (Teacher a : this.getTeacherList()) {
 			if (employeeID == a.getEmployeeID())
 				return a;
