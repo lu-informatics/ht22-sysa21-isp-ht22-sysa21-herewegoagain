@@ -113,7 +113,7 @@ public class Teacher {
 		
 
 	}
-	public Course removeCourseResponsible(String courseCode) {
+	public Course removeCourseResponsible(Course course) {
 		for (Course c : this.getResponsible()) {
 			if (c != null) {
 			getResponsible().remove(c);	
