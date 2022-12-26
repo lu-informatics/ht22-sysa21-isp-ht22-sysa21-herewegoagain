@@ -3,10 +3,6 @@ package application;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.net.URL;
-import java.util.ResourceBundle;
-import application.Course;
-import application.Department;
-import application.Teacher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -92,9 +88,6 @@ public class SampleController {
 	private ComboBox<String> comboBoxTeachingTeacher;
 
 	@FXML
-	private TableView<Teacher> tableViewResponsibility;
-
-	@FXML
 	private TableView<Teacher> tableViewTeaching;
 
 	@FXML
@@ -154,8 +147,8 @@ public class SampleController {
 
 	// ObservableList
 
-	ObservableList<Course> courseList = FXCollections.observableArrayList();
-	ObservableList<String> courses = FXCollections.observableArrayList();
+	private ObservableList<Course> courseList = FXCollections.observableArrayList();
+	private ObservableList<String> courses = FXCollections.observableArrayList();
 
 	// Randomizer for the 4 digits in the Teacher generate method
 	Random randomID = new Random();
@@ -196,8 +189,8 @@ public class SampleController {
 	// Teacher Lists
 	private TeacherRegister teacherReg = new TeacherRegister();
 
-	ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
-	ObservableList<String> teachers = FXCollections.observableArrayList();
+	private ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
+	private ObservableList<String> teachers = FXCollections.observableArrayList();
 
 	@FXML
 	private TableView<Teacher> tableViewTeacher;
@@ -223,7 +216,7 @@ public class SampleController {
 	public void initialize() {
 
 		// TableColumn Course
-
+		
 		tableColumnCourseCode.setCellValueFactory(new PropertyValueFactory<Course, Double>("courseCode"));
 		tableColumnCourseName.setCellValueFactory(new PropertyValueFactory<Course, String>("courseName"));
 		tableColumnCourseCredits.setCellValueFactory(new PropertyValueFactory<Course, Integer>("courseCredit"));
@@ -300,6 +293,8 @@ public class SampleController {
 			});
 			return row;
 		});
+		
+
 
 //Populating ComboBoxes
 		// Teacher
@@ -327,10 +322,9 @@ public class SampleController {
 // Generate Course Code
 	public void btnGenerateCourseCode(ActionEvent event) {
 
-
 		String courseName = txtCourseName.getText();
 
-		if (courseName.isEmpty() ) {
+		if (courseName.isEmpty()) {
 			// Print an error message if any of the values are empty
 			txtAreaCourse
 					.setText("Error: Please make sure the CourseName \nis filled in before generating a CourseCode.");
@@ -342,7 +336,6 @@ public class SampleController {
 			txtCourseCode.setText(courseCode.toUpperCase());
 		}
 	}
-	
 
 // Create Course
 
@@ -995,6 +988,7 @@ public class SampleController {
 		// responsible list
 		if (teacherId != null || coursecode != null) {
 			teacher.addCourseResponsible(course);
+			
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId
 					+ ", has been assigned \n responsibility for" + " course with course code: " + coursecode);
 
