@@ -134,4 +134,9 @@ public class Teacher {
 		}
 		return null;
 }
+
+	public void remove(Teacher teacher) {
+		// TODO Auto-generated method stub
+		
+	}
 }
