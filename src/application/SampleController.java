@@ -763,14 +763,6 @@ public class SampleController {
 				return;
 			}
 
-			/*
-			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
-			 * (NumberFormatException e) {
-			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
-			 * 
-			 * }
-			 */ // Kommer inte behövs efter Generate knappen är klar
-
 			if (salary < 0) {
 				txtAreaTeacher.setText("Salary cannot be negative value");
 				return;
@@ -809,13 +801,6 @@ public class SampleController {
 		// ComboBox later
 		if (!teacherID.isEmpty()) {
 
-			/*
-			 * int iD; try { iD = Integer.parseInt(teacherID); } catch
-			 * (NumberFormatException e) {
-			 * txtAreaTeacher.setText("Teacher ID must be written in numbers"); return;
-			 * 
-			 * }
-			 */
 
 			Teacher t = teacherReg.findTeacher(teacherID);
 			if (t == null) {
