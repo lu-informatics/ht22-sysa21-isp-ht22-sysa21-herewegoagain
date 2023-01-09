@@ -69,7 +69,7 @@
                         <TextField fx:id="txtTeacherLastName" layoutX="28.0" layoutY="50.0" promptText="Teacher Last Name" />
                         <Button fx:id="btnGenerateEmployeeID" layoutX="67.0" layoutY="242.0" mnemonicParsing="false" onAction="#btnGenerateEmployeeID" text="Generate ID" />
                         <TextField fx:id="txtTeacherAddress" layoutX="28.0" layoutY="82.0" promptText="Teacher Address" />
-                        <TextField fx:id="txtTeacherEmployeeID" layoutX="28.0" layoutY="184.0" promptText="Employee ID" />
+                        <TextField fx:id="txtTeacherEmployeeID" editable="false" layoutX="28.0" layoutY="184.0" promptText="Employee ID" />
                         <TextField fx:id="txtTeacherHourlySalary" layoutX="28.0" layoutY="116.0" promptText="Hourly Salary" />
                         <ComboBox fx:id="comboBoxTeacherTitle" layoutX="28.0" layoutY="151.0" prefHeight="26.0" prefWidth="159.0" promptText="Title" />
                         <Button fx:id="btnTeacherCreate" layoutX="38.0" layoutY="281.0" mnemonicParsing="false" onAction="#btnTeacherCreate" text="Create" />
@@ -98,7 +98,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btnGenerateCourseCode" layoutX="29.0" layoutY="216.0" mnemonicParsing="false" onAction="#btnGenerateCourseCode" text="Generate Course Code" />
-                        <TextField fx:id="txtCourseCode" layoutX="28.0" layoutY="129.0" promptText="Course Code" />
+                        <TextField fx:id="txtCourseCode" editable="false" layoutX="28.0" layoutY="129.0" promptText="Course Code" />
                         <TextField fx:id="txtCourseName" layoutX="29.0" layoutY="21.0" promptText="Course Name" />
                         <TextField fx:id="txtCourseCredit" layoutX="28.0" layoutY="57.0" promptText="Course Credit" />
                         <ComboBox fx:id="comboBoxCourseCycle" layoutX="29.0" layoutY="93.0" prefHeight="26.0" prefWidth="159.0" promptText="Cycle" />
