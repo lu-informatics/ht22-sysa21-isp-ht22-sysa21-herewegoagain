@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -983,11 +985,18 @@ public class SampleController {
 					.setText("Teacher with ID: " + teacherId + ", \n is already responsible for this course");
 			return;
 		}
+		// check if selected course already has a teacher - a course can only be taught
+		// by one teacher
+		if (course.getResponsibleTeacher() != null) {
+			txtAreaResponsibility.setText("The selected course already has a teacher, please choose another course");
+			return;
+		}
 
 		// if a teacher and course have been selected, add the course to the teachers
 		// responsible list
 		if (teacherId != null || coursecode != null) {
 			teacher.addCourseResponsible(course);
+			course.setResponsibleTeacher(teacher);
 			
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId
 					+ ", has been assigned \n responsibility for" + " course with course code: " + coursecode);
@@ -1011,10 +1020,12 @@ public class SampleController {
 			txtAreaResponsibility.setText("Teacher with ID: " + teacherId + ", \n is not responsible for this course");
 			return;
 		}
+				
 		// if course and teacher have been selected, remove the course from the teachers
 		// responsible list
 		if (teacherId != null || coursecode != null) {
 			teacher.removeCourseResponsible(course);
+			course.RemoveResponsibleTeacher(teacher);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherId + ", is no longer \n responsible for"
 					+ " course with course code: " + coursecode);
 
@@ -1038,12 +1049,7 @@ public class SampleController {
 		if (teacher.findCourseTeaching(coursecode) != null) {
 			txtAreaTeaching.setText("Teacher with ID: " + teacherId + ", \n is already teaching this course");
 			return;
-		}
-		// check if selected course already has a teacher - a course can only be taught
-		// by one teacher
-		if (course.getTeacher() != null) {
-			txtAreaTeaching.setText("The selected course already has a teacher, please choose another course");
-			return;
+		
 		}
 		// if a teacher and course have not been selected, or amount of hours have not
 		// been filled in
@@ -1055,7 +1061,7 @@ public class SampleController {
 			// and teacher gets added as teacher for selected course
 		} else {
 			teacher.addCourseTeaching(course);
-			course.setTeacher(teacher);
+			course.addTeachingTeacher(teacher);
 			txtAreaTeaching.setText("Teacher with employee ID: " + teacherId + ", \n"
 					+ " has been assigned course with course code: " + coursecode + "\n " + "Hours: " + hours);
 		}
@@ -1067,14 +1073,52 @@ public class SampleController {
 		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
 		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
 		String updatedHours = txtTeachingHours.getText();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(teacherId);
 
 		if (teacherId == null || coursecode == null || updatedHours.isEmpty()) {
 			txtAreaTeaching.setText("Please fill in all required fields");
-
-		} else {
-			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n" + "on course ("
-					+ coursecode + "), has been updated to: " + updatedHours);
 		}
+		if (teacher.findCourseTeaching(coursecode) != null) {
+			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n" + "on course ("
+					+ coursecode + "), has been updated to: " + updatedHours);	
+			
+		} else {
+			txtAreaTeaching.setText("The selected teacher does not teach the selected course");
+		}
+	}
+	
+	public void btnResponsibilityView(ActionEvent event) {
+		String teacherId = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(teacherId);
 
+		if (coursecode != null) {
+			txtAreaResponsibility.setText("The responsible teacher for course: " + coursecode + " is: " + course.getResponsibleTeacher().getTeacherName() 
+					+ "(" + course.getResponsibleTeacher().getEmployeeID() + ")");
+			
+		} else { 
+			txtAreaResponsibility.setText("Select a teacher to view");
+		
+		}	
+	}
+	public void btnTeachingView(ActionEvent event) {
+		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String hours = txtTeachingHours.getText();
+		Course course = courseReg.findCourse((coursecode));
+		Teacher teacher = teacherReg.findTeacher(teacherId);
+		ArrayList<Teacher> pa = course.getTeachingTeachers();
+		
+		
+		
+		if (coursecode != null) {
+			txtAreaTeaching.setText("Teachers teaching the course: " + coursecode + "\n are: " + pa);
+			
+		} else { 
+			txtAreaTeaching.setText("Select a teacher to view");
+		}
+		
 	}
 }
