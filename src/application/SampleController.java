@@ -971,7 +971,7 @@ public class SampleController {
 	public void btnResponsibilityGive(ActionEvent event) {
 		String teacherId = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
 		String coursecode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
-		Course course = courseReg.findCourse((coursecode));
+		Course course = courseReg.findCourse(coursecode);
 		Teacher teacher = teacherReg.findTeacher(teacherId);
 
 		// checks if selected course already exists in teachers responsible list
@@ -1007,7 +1007,7 @@ public class SampleController {
 	public void btnResponsibilityRemove(ActionEvent event) {
 		String teacherID = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
 		String courseCode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
-		Course course = courseReg.findCourse((courseCode));
+		Course course = courseReg.findCourse(courseCode);
 		Teacher teacher = teacherReg.findTeacher(teacherID);
 
 		// check if the course exists in the teachers responsible list
@@ -1020,7 +1020,8 @@ public class SampleController {
 		// responsible list
 		if (teacherID != null || courseCode != null) {
 			teacher.removeCourseResponsible(course);
-			course.RemoveResponsibleTeacher(teacherID);
+			course.RemoveResponsibleTeacher(teacher.getEmployeeID());
+			course.setResponsibleTeacher(null);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherID + ", is no longer \n responsible for"
 					+ " course with course code: " + courseCode);
 
@@ -1037,7 +1038,7 @@ public class SampleController {
 		String teacherID = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
 		String courseCode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
 		String hours = txtTeachingHours.getText();
-		Course course = courseReg.findCourse((courseCode));
+		Course course = courseReg.findCourse(courseCode);
 		Teacher teacher = teacherReg.findTeacher(teacherID);
 
 		// check if the course already exists in chosen teachers teaching list
@@ -1065,18 +1066,18 @@ public class SampleController {
 
 	public void btnTeachingUpdate(ActionEvent event) {
 
-		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
-		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String teacherID = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String courseCode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
 		String updatedHours = txtTeachingHours.getText();
-		Course course = courseReg.findCourse((coursecode));
-		Teacher teacher = teacherReg.findTeacher(teacherId);
+		Course course = courseReg.findCourse(courseCode);
+		Teacher teacher = teacherReg.findTeacher(teacherID);
 
-		if (teacherId == null || coursecode == null || updatedHours.isEmpty()) {
+		if (teacherID == null || courseCode == null || updatedHours.isEmpty()) {
 			txtAreaTeaching.setText("Please fill in all required fields");
 		}
-		if (teacher.findCourseTeaching(coursecode) != null) {
-			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherId + ") \n" + "on course ("
-					+ coursecode + "), has been updated to: " + updatedHours);
+		if (teacher.findCourseTeaching(courseCode) != null) {
+			txtAreaTeaching.setText("Hours spent teaching for teacher (" + teacherID + ") \n" + "on course ("
+					+ courseCode + "), has been updated to: " + updatedHours);
 
 		} else {
 			txtAreaTeaching.setText("The selected teacher does not teach the selected course");
@@ -1084,13 +1085,13 @@ public class SampleController {
 	}
 
 	public void btnResponsibilityView(ActionEvent event) {
-		String teacherId = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
-		String coursecode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
-		Course course = courseReg.findCourse((coursecode));
-		Teacher teacher = teacherReg.findTeacher(teacherId);
+		String teacherID = comboBoxResponsibilityTeacher.getSelectionModel().getSelectedItem();
+		String courseCode = comboBoxResponsibilityCourse.getSelectionModel().getSelectedItem();
+		Course course = courseReg.findCourse(courseCode);
+		Teacher teacher = teacherReg.findTeacher(teacherID);
 
-		if (coursecode != null) {
-			txtAreaResponsibility.setText("The responsible teacher for course: " + coursecode + " is: "
+		if (courseCode != null) {
+			txtAreaResponsibility.setText("The responsible teacher for course: " + courseCode + " is: "
 					+ course.getResponsibleTeacher().getTeacherName() + "("
 					+ course.getResponsibleTeacher().getEmployeeID() + ")");
 
@@ -1101,15 +1102,15 @@ public class SampleController {
 	}
 
 	public void btnTeachingView(ActionEvent event) {
-		String teacherId = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
-		String coursecode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
+		String teacherID = comboBoxTeachingTeacher.getSelectionModel().getSelectedItem();
+		String courseCode = comboBoxTeachingCourse.getSelectionModel().getSelectedItem();
 		String hours = txtTeachingHours.getText();
-		Course course = courseReg.findCourse((coursecode));
-		Teacher teacher = teacherReg.findTeacher(teacherId);
+		Course course = courseReg.findCourse((courseCode));
+		Teacher teacher = teacherReg.findTeacher(teacherID);
 		ArrayList<Teacher> pa = course.getTeachingTeachers();
 
-		if (coursecode != null) {
-			txtAreaTeaching.setText("Teachers teaching the course: " + coursecode + "\n are: " + pa);
+		if (courseCode != null) {
+			txtAreaTeaching.setText("Teachers teaching the course: " + courseCode + "\n are: " + pa);
 
 		} else {
 			txtAreaTeaching.setText("Select a teacher to view");
