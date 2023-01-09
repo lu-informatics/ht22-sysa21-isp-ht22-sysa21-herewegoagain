@@ -1021,6 +1021,7 @@ public class SampleController {
 		if (teacherID != null || courseCode != null) {
 			teacher.removeCourseResponsible(course);
 			course.RemoveResponsibleTeacher(teacher.getEmployeeID());
+			course.setResponsibleTeacher(null);
 			txtAreaResponsibility.setText("Teacher with employee ID: " + teacherID + ", is no longer \n responsible for"
 					+ " course with course code: " + courseCode);
 
