@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Course {
 
 	// must not be a negative value
@@ -7,7 +9,8 @@ public class Course {
 	private String courseName;
 	private int courseCredit;
 	private String courseCycle;
-	private Teacher teacher;
+	private Teacher responsibleTeacher;
+	private ArrayList<Teacher> teachingTeachers = new ArrayList<>();
 
 
 	// Constructor
@@ -50,13 +53,30 @@ public class Course {
 	public void setCourseCycle(String courseCycle) {
 		this.courseCycle = courseCycle;
 	}
-	public Teacher getTeacher() {
-		return teacher;
+	public Teacher getResponsibleTeacher() {
+		return responsibleTeacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
+	public void setResponsibleTeacher(Teacher teacher) {
+		this.responsibleTeacher = teacher;
 	}
-		
+	public void RemoveResponsibleTeacher(Teacher teacher) {
+			if (responsibleTeacher != null) {
+		getResponsibleTeacher().remove(teacher); 
+			}
+			
+	}
+	
+	public ArrayList<Teacher> getTeachingTeachers() {
+		return teachingTeachers;
+	}
+
+	public void setTeachingTeachers(ArrayList<Teacher> teachingTeachers) {
+		this.teachingTeachers = teachingTeachers;
+	}
+	
+	public  void addTeachingTeacher(Teacher teacher) {
+		this.teachingTeachers.add(teacher);
+	}
 	}
 
