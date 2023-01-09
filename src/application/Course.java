@@ -74,6 +74,7 @@ public class Course {
 		for (Teacher teacher : teachingTeachers) {
 			
 		}
+		return responsibleTeacher;
 	}
 
 	public void setTeachingTeachers(ArrayList<Teacher> teachingTeachers) {
