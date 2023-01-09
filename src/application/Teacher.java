@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class Teacher {
+public class Teacher extends TeacherRegister{
 
 	private String employeeID;
 	private String teacherName;
@@ -135,8 +135,5 @@ public class Teacher {
 		return null;
 }
 
-	public void remove(Teacher teacher) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
