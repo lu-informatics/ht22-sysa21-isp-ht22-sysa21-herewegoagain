@@ -61,17 +61,19 @@ public class Course {
 		this.responsibleTeacher = teacher;
 	}
 
-	public Teacher RemoveResponsibleTeacher(Teacher teacher) {
-			if (teacher != null) {
-				getResponsibleTeacher().remove(teacher);
+	public Teacher RemoveResponsibleTeacher(String employeeId) {
 
-				return teacher;
-			}
-			return teacher;
-			}
+		return responsibleTeacher.removeTeacher(employeeId);
+	}
 
 	public ArrayList<Teacher> getTeachingTeachers() {
 		return teachingTeachers;
+	}
+	
+	public Teacher findTeacherTeaching(String employeeId) {
+		for (Teacher teacher : teachingTeachers) {
+			
+		}
 	}
 
 	public void setTeachingTeachers(ArrayList<Teacher> teachingTeachers) {
