@@ -9,8 +9,7 @@ public class Course {
 	private String courseName;
 	private int courseCredit;
 	private String courseCycle;
-	private Teacher responsibleTeacher;
-	private ArrayList<Teacher> teachingTeachers = new ArrayList<>();
+	private ArrayList<CourseResponsible> courseResponsible;
 
 	// Constructor
 	public Course(String courseCode, String courseName, int courseCredit, String courseCycle) {
@@ -53,37 +52,36 @@ public class Course {
 		this.courseCycle = courseCycle;
 	}
 
-	public Teacher getResponsibleTeacher() {
-		return responsibleTeacher;
+	public ArrayList<CourseResponsible> getcourseResponsible() {
+		return courseResponsible;
 	}
 
-	public void setResponsibleTeacher(Teacher teacher) {
-		this.responsibleTeacher = teacher;
+	public void setResponsible(ArrayList<CourseResponsible> responsible) {
+		this.courseResponsible = responsible;
 	}
 
-	public Teacher RemoveResponsibleTeacher(Teacher teacher) {
-			if (teacher != null) {
-				getResponsibleTeacher().remove(teacher);
+	public void addCourseResponsible(CourseResponsible cR) {
+		courseResponsible.add(cR);
+	}
 
-				return teacher;
+	public CourseResponsible findResponsible(String teacherID) {
+		for (CourseResponsible cR : courseResponsible) {
+			if (cR.getEmployeeID().equals(teacherID)) {
+				return cR;
 			}
-			return teacher;
-			}
-
-	public ArrayList<Teacher> getTeachingTeachers() {
-		return teachingTeachers;
+		}
+		return null;
 	}
 
-	public void setTeachingTeachers(ArrayList<Teacher> teachingTeachers) {
-		this.teachingTeachers = teachingTeachers;
+	public CourseResponsible removeResponsibility(String teacherID) {
+		CourseResponsible cR = this.findResponsible(teacherID);
+		if (cR != null) {
+			courseResponsible.remove(cR);
+			return cR;
+		}
+
+		return null;
+
 	}
 
-	public void addTeachingTeacher(Teacher teacher) {
-		this.teachingTeachers.add(teacher);
-	}
-
-	@Override
-	public String toString() {
-		return teachingTeachers.toString();
-	}
 }

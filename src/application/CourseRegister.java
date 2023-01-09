@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 
 public class CourseRegister {
+	
 	private ArrayList<Course> courseReg = new ArrayList<Course>();
 
 	public ArrayList<Course> getCourseReg() {
