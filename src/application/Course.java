@@ -12,7 +12,6 @@ public class Course {
 	private Teacher responsibleTeacher;
 	private ArrayList<Teacher> teachingTeachers = new ArrayList<>();
 
-
 	// Constructor
 	public Course(String courseCode, String courseName, int courseCredit, String courseCycle) {
 		this.courseCode = courseCode;
@@ -37,7 +36,7 @@ public class Course {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-	
+
 	public int getCourseCredit() {
 		return courseCredit;
 	}
@@ -53,6 +52,7 @@ public class Course {
 	public void setCourseCycle(String courseCycle) {
 		this.courseCycle = courseCycle;
 	}
+
 	public Teacher getResponsibleTeacher() {
 		return responsibleTeacher;
 	}
@@ -60,13 +60,16 @@ public class Course {
 	public void setResponsibleTeacher(Teacher teacher) {
 		this.responsibleTeacher = teacher;
 	}
-	public void RemoveResponsibleTeacher(Teacher teacher) {
-			if (responsibleTeacher != null) {
-		getResponsibleTeacher().remove(teacher); 
+
+	public Teacher RemoveResponsibleTeacher(Teacher teacher) {
+			if (teacher != null) {
+				getResponsibleTeacher().remove(teacher);
+
+				return teacher;
 			}
-			
-	}
-	
+			return teacher;
+			}
+
 	public ArrayList<Teacher> getTeachingTeachers() {
 		return teachingTeachers;
 	}
@@ -74,9 +77,13 @@ public class Course {
 	public void setTeachingTeachers(ArrayList<Teacher> teachingTeachers) {
 		this.teachingTeachers = teachingTeachers;
 	}
-	
-	public  void addTeachingTeacher(Teacher teacher) {
+
+	public void addTeachingTeacher(Teacher teacher) {
 		this.teachingTeachers.add(teacher);
 	}
-	}
 
+	@Override
+	public String toString() {
+		return teachingTeachers.toString();
+	}
+}

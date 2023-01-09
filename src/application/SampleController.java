@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.net.URL;
@@ -1107,9 +1109,12 @@ public class SampleController {
 		String hours = txtTeachingHours.getText();
 		Course course = courseReg.findCourse((coursecode));
 		Teacher teacher = teacherReg.findTeacher(teacherId);
+		ArrayList<Teacher> pa = course.getTeachingTeachers();
+		
+		
 		
 		if (coursecode != null) {
-			txtAreaTeaching.setText("Teachers teaching the course: " + coursecode + "\n are: " + course.getTeachingTeachers());
+			txtAreaTeaching.setText("Teachers teaching the course: " + coursecode + "\n are: " + pa);
 			
 		} else { 
 			txtAreaTeaching.setText("Select a teacher to view");
